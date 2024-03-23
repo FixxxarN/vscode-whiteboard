@@ -12,10 +12,12 @@
   "activationEvents": [],
   "main": "./extension.js",
   "contributes": {
-    "commands": [{
-      "command": "vscode-whiteboard.helloWorld",
-      "title": "Hello World"
-    }]
+    "commands": [
+      {
+        "command": "vscode-whiteboard.start",
+        "title": "Start a new whiteboard session"
+      }
+    ]
   },
   "scripts": {
     "lint": "eslint .",
