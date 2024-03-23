@@ -1,10 +1,19 @@
 const vscode = require('vscode');
 
 function activate(context) {
-	context.subscriptions.push(vscode.commands.registerCommand('vscode-whiteboard.start', () => {
-		const panel = vscode.window.createWebviewPanel('vscode-whiteboard', 'VS CODE WHITEBOARD', vscode.ViewColumn.One, {});
+	let currentPanel = undefined;
 
-		panel.webview.html = getWebviewContent();
+	context.subscriptions.push(vscode.commands.registerCommand('vscode-whiteboard.start', () => {
+		const columnToShowIn = vscode.window.activeTextEditor ? vscode.window.activeTextEditor.viewColumn : undefined;
+
+		if (currentPanel) {
+			currentPanel.reveal(columnToShowIn);
+		}
+		else {
+			currentPanel = vscode.window.createWebviewPanel('vscode-whiteboard', 'VS CODE WHITEBOARD', columnToShowIn || vscode.ViewColumn.One, {});
+		}
+
+		currentPanel.webview.html = getWebviewContent();
 	}))
 }
 
