@@ -19,8 +19,9 @@ function activate(context) {
 }
 
 function getWebviewContent(extensionUri, currentPanel) {
-	const whiteboardUri = currentPanel.webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'src', 'whiteboard.js'))
-	const stylesUri = currentPanel.webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'src', 'styles.css'))
+	const mainUri = currentPanel.webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'src', 'main.js'));
+	const whiteboardUri = currentPanel.webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'src', 'whiteboard.js'));
+	const stylesUri = currentPanel.webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'src', 'styles.css'));
 
 	const nonce = getNonce();
 
@@ -32,7 +33,8 @@ function getWebviewContent(extensionUri, currentPanel) {
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<title>Visual Studio Code - Whiteboard</title>
 			<link href="${stylesUri}" rel="stylesheet">
-			<script nonce="${nonce}" src="${whiteboardUri}" defer></script>
+			<script nonce="${nonce}" src="${whiteboardUri}"></script>
+			<script nonce="${nonce}" src="${mainUri}" defer></script>
 		</head>
 		<body>
 			<canvas id="whiteboard"></canvas>
