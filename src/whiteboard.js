@@ -8,9 +8,9 @@ const MOUSE_STATES = {
 }
 
 class Whiteboard {
-  constructor(canvas) {
+  constructor(canvas, context) {
     this.canvas = canvas;
-    this.context = canvas.getContext('2d');
+    this.context = context;
 
     this.context.lineWidth = 2;
     this.context.lineCap = 'round';
@@ -20,6 +20,8 @@ class Whiteboard {
   initiateCanvas() {
     this.canvas.height = window.innerHeight;
     this.canvas.width = window.innerWidth;
+
+    this.resizeCanvas();
   }
 
   initiateCanvasEventListeners() {
@@ -44,6 +46,8 @@ class Whiteboard {
 
       this.draw(e);
     });
+
+    window.addEventListener('resize', () => this.resizeCanvas());
   }
 
   draw(e) {
@@ -68,5 +72,21 @@ class Whiteboard {
       downloadLink.setAttribute('href', url);
       downloadLink.click();
     });
+  }
+
+  resizeCanvas() {
+    this.context.canvas.height = window.innerHeight;
+    this.context.canvas.width = window.innerWidth;
+
+    this.scaleCanvas();
+  }
+
+  scaleCanvas() {
+    const scale = window.devicePixelRatio;
+
+    this.canvas.height = Math.floor(window.innerHeight * scale);
+    this.canvas.width = Math.floor(window.innerWidth * scale);
+
+    this.context.scale(scale, scale);
   }
 }

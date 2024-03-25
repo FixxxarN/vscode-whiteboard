@@ -1,8 +1,9 @@
 /* eslint-disable no-undef */
 // @ts-nocheck
 const canvas = document.getElementById('whiteboard');
+const context = canvas.getContext('2d');
 
-let whiteboard = new Whiteboard(canvas);
+let whiteboard = new Whiteboard(canvas, context);
 
 whiteboard.initiateCanvas();
 whiteboard.initiateCanvasEventListeners();
