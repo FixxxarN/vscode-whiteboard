@@ -37,6 +37,9 @@ function getWebviewContent(extensionUri, currentPanel) {
 			<script nonce="${nonce}" src="${mainUri}" defer></script>
 		</head>
 		<body>
+			<div class="interactives-container">
+				<button id="export-button">Export</button>
+			</div>
 			<canvas id="whiteboard"></canvas>
 		</body>
 	</html>

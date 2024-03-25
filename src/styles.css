@@ -9,3 +9,10 @@ body {
 canvas {
   background-color: #eee;
 }
+
+.interactives-container {
+  position: absolute;
+  padding: 0.5rem;
+  top: 0px;
+  left: 0px;
+}

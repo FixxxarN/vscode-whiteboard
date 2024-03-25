@@ -57,4 +57,16 @@ class Whiteboard {
 
     this.previousPoint = newPoint;
   }
+
+  export() {
+    const downloadLink = document.createElement('a');
+
+    this.canvas.toBlob((blob) => {
+      const url = URL.createObjectURL(blob);
+
+      downloadLink.setAttribute('download', 'whiteboard.png');
+      downloadLink.setAttribute('href', url);
+      downloadLink.click();
+    });
+  }
 }
