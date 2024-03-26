@@ -15,6 +15,10 @@ function activate(context) {
 		}
 
 		currentPanel.webview.html = getWebviewContent(context.extensionUri, currentPanel);
+
+		currentPanel.onDidDispose(() => {
+			currentPanel = undefined;
+		}, null, context.subscriptions);
 	}))
 }
 
