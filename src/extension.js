@@ -39,6 +39,7 @@ function getWebviewContent(extensionUri, currentPanel) {
 		<body>
 			<div class="interactives-container">
 				<button id="export-button">Export</button>
+				<button id="clear-button">Clear</button>
 			</div>
 			<canvas id="whiteboard"></canvas>
 		</body>

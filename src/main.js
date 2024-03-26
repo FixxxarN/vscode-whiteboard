@@ -12,3 +12,7 @@ document.getElementById('export-button').onclick = () => {
   whiteboard.export();
 }
 
+document.getElementById('clear-button').onclick = () => {
+  whiteboard.clearCanvas();
+}
+

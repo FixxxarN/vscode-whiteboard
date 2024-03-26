@@ -74,6 +74,11 @@ class Whiteboard {
     });
   }
 
+  clearCanvas() {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.context.beginPath();
+  }
+
   resizeCanvas() {
     this.context.canvas.height = window.innerHeight;
     this.context.canvas.width = window.innerWidth;
