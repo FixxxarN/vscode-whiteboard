@@ -7,6 +7,10 @@ const MOUSE_STATES = {
   UP: 'UP'
 }
 
+const SHAPE_TYPES = {
+  LINE: 'LINE'
+}
+
 class Whiteboard {
   constructor(canvas, context) {
     this.canvas = canvas;
@@ -15,6 +19,8 @@ class Whiteboard {
     this.context.lineWidth = 2;
     this.context.lineCap = 'round';
     this.context.lineJoin = 'round';
+
+    this.shapes = [];
   }
 
   initiateCanvas() {
@@ -27,12 +33,16 @@ class Whiteboard {
   initiateCanvasEventListeners() {
     this.canvas.addEventListener('mousedown', (e) => {
       this.mouseState = MOUSE_STATES.DOWN;
-      this.previousPoint = { x: e.clientX - canvas.offsetLeft, y: e.clientY - canvas.offsetTop }
+      this.currentShape = {
+        type: SHAPE_TYPES.LINE,
+        points: [{ x: e.clientX - canvas.offsetLeft, y: e.clientY - canvas.offsetTop }],
+      }
     });
 
     this.canvas.addEventListener('mouseup', (e) => {
       this.mouseState = MOUSE_STATES.UP;
-      this.previousPoint = undefined;
+      this.shapes.push(this.currentShape);
+      this.currentShape = undefined;
     });
 
     this.canvas.addEventListener('mousemove', (e) => {
@@ -40,7 +50,7 @@ class Whiteboard {
         return;
       }
 
-      if (!this.previousPoint) {
+      if (!this.currentShape) {
         return;
       }
 
@@ -51,15 +61,14 @@ class Whiteboard {
   }
 
   draw(e) {
+    this.context.moveTo(this.currentShape.points[this.currentShape.points.length - 1].x, this.currentShape.points[this.currentShape.points.length - 1].y);
+
     const newPoint = { x: e.clientX - canvas.offsetLeft, y: e.clientY - canvas.offsetTop }
-
-    this.context.moveTo(this.previousPoint.x, this.previousPoint.y);
-
     this.context.lineTo(newPoint.x, newPoint.y);
 
     this.context.stroke();
 
-    this.previousPoint = newPoint;
+    this.currentShape.points.push(newPoint);
   }
 
   export() {
@@ -75,6 +84,7 @@ class Whiteboard {
   }
 
   clearCanvas() {
+    this.shapes = [];
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.beginPath();
   }
@@ -93,5 +103,31 @@ class Whiteboard {
     this.canvas.width = Math.floor(window.innerWidth * scale);
 
     this.context.scale(scale, scale);
+
+    this.redrawCanvas();
+  }
+
+  redrawCanvas() {
+    this.shapes.forEach((shape) => {
+      switch (shape.type) {
+        case SHAPE_TYPES.LINE: {
+          this.drawLine(shape.points);
+        }
+      }
+    })
+  }
+
+  drawLine(points) {
+    points.forEach((point, i) => {
+      if (!points[i + 1]) {
+        return;
+      }
+
+      this.context.moveTo(point.x, point.y);
+
+      this.context.lineTo(points[i + 1].x, points[i + 1].y);
+
+      this.context.stroke();
+    })
   }
 }
