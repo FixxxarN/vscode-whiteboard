@@ -9,7 +9,8 @@ const MOUSE_STATES = {
 
 const SHAPE_TYPES = {
   LINE: 'LINE',
-  RECTANGLE: 'RECTANGLE'
+  RECTANGLE: 'RECTANGLE',
+  CIRCLE: 'CIRCLE'
 }
 
 class Whiteboard {
@@ -44,6 +45,7 @@ class Whiteboard {
         type: this.selectedShapeType,
         points: [{ x: e.clientX - this.dynamicCanvas.offsetLeft, y: e.clientY - this.dynamicCanvas.offsetTop }],
       }
+      this.dynamicCanvasContext.beginPath();
     });
 
     this.dynamicCanvas.addEventListener('mouseup', (e) => {
@@ -76,6 +78,10 @@ class Whiteboard {
         this.currentShape.points.push({ x: e.clientX - this.dynamicCanvas.offsetLeft, y: e.clientY - this.dynamicCanvas.offsetTop });
         break;
       }
+      case SHAPE_TYPES.CIRCLE: {
+        this.currentShape.points.push({ x: e.clientX - this.dynamicCanvas.offsetLeft, y: e.clientY - this.dynamicCanvas.offsetTop });
+        break;
+      }
     }
 
     this.shapes.push(this.currentShape);
@@ -93,6 +99,10 @@ class Whiteboard {
       }
       case SHAPE_TYPES.RECTANGLE: {
         this.drawOngoingRectangle(e);
+        break;
+      }
+      case SHAPE_TYPES.CIRCLE: {
+        this.drawOngoingCircle(e);
         break;
       }
     }
@@ -118,6 +128,18 @@ class Whiteboard {
     const newPoint = { x: e.clientX - this.dynamicCanvas.offsetLeft, y: e.clientY - this.dynamicCanvas.offsetTop }
 
     this.dynamicCanvasContext.rect(startingX, startingY, newPoint.x - startingX, newPoint.y - startingY);
+    this.dynamicCanvasContext.stroke();
+  }
+
+  drawOngoingCircle(e) {
+    this.clearDynamicCanvas();
+
+    const startingX = this.currentShape.points[0].x;
+    const startingY = this.currentShape.points[0].y;
+
+    const newPoint = { x: e.clientX - this.dynamicCanvas.offsetLeft, y: e.clientY - this.dynamicCanvas.offsetTop }
+
+    this.dynamicCanvasContext.arc(startingX + ((newPoint.x - startingX) / 2), startingY + ((newPoint.y - startingY) / 2), Math.abs((newPoint.x - startingX) / 2), 0, 2 * Math.PI);
     this.dynamicCanvasContext.stroke();
   }
 
@@ -181,6 +203,10 @@ class Whiteboard {
           this.drawRectangle(shape.points);
           break;
         }
+        case SHAPE_TYPES.CIRCLE: {
+          this.drawCircle(shape.points);
+          break;
+        }
       }
     })
   }
@@ -200,6 +226,7 @@ class Whiteboard {
   }
 
   drawRectangle(points) {
+    this.staticCanvasContext.beginPath();
     const startingX = points[0].x;
     const startingY = points[0].y;
 
@@ -207,6 +234,18 @@ class Whiteboard {
     const endingY = points[1].y;
 
     this.staticCanvasContext.rect(startingX, startingY, endingX - startingX, endingY - startingY);
+    this.staticCanvasContext.stroke();
+  }
+
+  drawCircle(points) {
+    this.staticCanvasContext.beginPath();
+    const startingX = points[0].x;
+    const startingY = points[0].y;
+
+    const endingX = points[1].x;
+    const endingY = points[1].y;
+
+    this.staticCanvasContext.arc(startingX + ((endingX - startingX) / 2), startingY + ((endingY - startingY) / 2), Math.abs((endingX - startingX) / 2), 0, 2 * Math.PI);
     this.staticCanvasContext.stroke();
   }
 

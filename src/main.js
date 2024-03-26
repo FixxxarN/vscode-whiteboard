@@ -27,3 +27,7 @@ document.getElementById('rectangle-shape-button').onclick = () => {
   whiteboard.setSelectedShapeType('RECTANGLE');
 }
 
+document.getElementById('circle-shape-button').onclick = () => {
+  whiteboard.setSelectedShapeType('CIRCLE');
+}
+
