@@ -1,9 +1,12 @@
 /* eslint-disable no-undef */
 // @ts-nocheck
-const canvas = document.getElementById('whiteboard');
-const context = canvas.getContext('2d');
+const staticCanvas = document.getElementById('whiteboard-static');
+const staticCanvasContext = staticCanvas.getContext('2d');
 
-let whiteboard = new Whiteboard(canvas, context);
+const dynamicCanvas = document.getElementById('whiteboard-dynamic');
+const dynamicCanvasContext = dynamicCanvas.getContext('2d');
+
+let whiteboard = new Whiteboard(staticCanvas, staticCanvasContext, dynamicCanvas, dynamicCanvasContext);
 
 whiteboard.initiateCanvas();
 whiteboard.initiateCanvasEventListeners();
@@ -13,6 +16,14 @@ document.getElementById('export-button').onclick = () => {
 }
 
 document.getElementById('clear-button').onclick = () => {
-  whiteboard.clearCanvas();
+  whiteboard.clearStaticCanvas();
+}
+
+document.getElementById('line-shape-button').onclick = () => {
+  whiteboard.setSelectedShapeType('LINE');
+}
+
+document.getElementById('rectangle-shape-button').onclick = () => {
+  whiteboard.setSelectedShapeType('RECTANGLE');
 }
 

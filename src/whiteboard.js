@@ -8,44 +8,50 @@ const MOUSE_STATES = {
 }
 
 const SHAPE_TYPES = {
-  LINE: 'LINE'
+  LINE: 'LINE',
+  RECTANGLE: 'RECTANGLE'
 }
 
 class Whiteboard {
-  constructor(canvas, context) {
-    this.canvas = canvas;
-    this.context = context;
+  constructor(staticCanvas, staticCanvasContext, dynamicCanvas, dynamicCanvasContext) {
+    this.staticCanvas = staticCanvas;
+    this.staticCanvasContext = staticCanvasContext;
+    this.dynamicCanvas = dynamicCanvas;
+    this.dynamicCanvasContext = dynamicCanvasContext;
 
-    this.context.lineWidth = 2;
-    this.context.lineCap = 'round';
-    this.context.lineJoin = 'round';
+    this.dynamicCanvasContext.lineWidth = 2;
+    this.dynamicCanvasContext.lineCap = 'round';
+    this.dynamicCanvasContext.lineJoin = 'round';
 
     this.shapes = [];
+    this.selectedShapeType = SHAPE_TYPES.LINE;
   }
 
   initiateCanvas() {
-    this.canvas.height = window.innerHeight;
-    this.canvas.width = window.innerWidth;
+    this.staticCanvas.height = window.innerHeight;
+    this.staticCanvas.width = window.innerWidth;
+
+    this.dynamicCanvas.height = window.innerHeight;
+    this.dynamicCanvas.width = window.innerWidth;
 
     this.resizeCanvas();
   }
 
   initiateCanvasEventListeners() {
-    this.canvas.addEventListener('mousedown', (e) => {
+    this.dynamicCanvas.addEventListener('mousedown', (e) => {
       this.mouseState = MOUSE_STATES.DOWN;
       this.currentShape = {
-        type: SHAPE_TYPES.LINE,
-        points: [{ x: e.clientX - canvas.offsetLeft, y: e.clientY - canvas.offsetTop }],
+        type: this.selectedShapeType,
+        points: [{ x: e.clientX - this.dynamicCanvas.offsetLeft, y: e.clientY - this.dynamicCanvas.offsetTop }],
       }
     });
 
-    this.canvas.addEventListener('mouseup', (e) => {
+    this.dynamicCanvas.addEventListener('mouseup', (e) => {
       this.mouseState = MOUSE_STATES.UP;
-      this.shapes.push(this.currentShape);
-      this.currentShape = undefined;
+      this.handleMouseUp(e);
     });
 
-    this.canvas.addEventListener('mousemove', (e) => {
+    this.dynamicCanvas.addEventListener('mousemove', (e) => {
       if (this.mouseState === MOUSE_STATES.UP) {
         return;
       }
@@ -54,27 +60,71 @@ class Whiteboard {
         return;
       }
 
-      this.draw(e);
+      this.handleMouseMove(e);
     });
 
     window.addEventListener('resize', () => this.resizeCanvas());
   }
 
-  draw(e) {
-    this.context.moveTo(this.currentShape.points[this.currentShape.points.length - 1].x, this.currentShape.points[this.currentShape.points.length - 1].y);
+  handleMouseUp(e) {
+    switch (this.selectedShapeType) {
+      case SHAPE_TYPES.LINE: {
+        this.clearDynamicCanvas();
+        break;
+      }
+      case SHAPE_TYPES.RECTANGLE: {
+        this.currentShape.points.push({ x: e.clientX - this.dynamicCanvas.offsetLeft, y: e.clientY - this.dynamicCanvas.offsetTop });
+        break;
+      }
+    }
 
-    const newPoint = { x: e.clientX - canvas.offsetLeft, y: e.clientY - canvas.offsetTop }
-    this.context.lineTo(newPoint.x, newPoint.y);
+    this.shapes.push(this.currentShape);
+    this.currentShape = undefined;
 
-    this.context.stroke();
+    this.clearDynamicCanvas();
+    this.redrawCanvas();
+  }
+
+  handleMouseMove(e) {
+    switch (this.selectedShapeType) {
+      case SHAPE_TYPES.LINE: {
+        this.drawOngoingLine(e);
+        break;
+      }
+      case SHAPE_TYPES.RECTANGLE: {
+        this.drawOngoingRectangle(e);
+        break;
+      }
+    }
+  }
+
+  drawOngoingLine(e) {
+    this.dynamicCanvasContext.moveTo(this.currentShape.points[this.currentShape.points.length - 1].x, this.currentShape.points[this.currentShape.points.length - 1].y);
+
+    const newPoint = { x: e.clientX - this.dynamicCanvas.offsetLeft, y: e.clientY - this.dynamicCanvas.offsetTop }
+    this.dynamicCanvasContext.lineTo(newPoint.x, newPoint.y);
+
+    this.dynamicCanvasContext.stroke();
 
     this.currentShape.points.push(newPoint);
+  }
+
+  drawOngoingRectangle(e) {
+    this.clearDynamicCanvas();
+
+    const startingX = this.currentShape.points[0].x;
+    const startingY = this.currentShape.points[0].y;
+
+    const newPoint = { x: e.clientX - this.dynamicCanvas.offsetLeft, y: e.clientY - this.dynamicCanvas.offsetTop }
+
+    this.dynamicCanvasContext.rect(startingX, startingY, newPoint.x - startingX, newPoint.y - startingY);
+    this.dynamicCanvasContext.stroke();
   }
 
   export() {
     const downloadLink = document.createElement('a');
 
-    this.canvas.toBlob((blob) => {
+    this.staticCanvas.toBlob((blob) => {
       const url = URL.createObjectURL(blob);
 
       downloadLink.setAttribute('download', 'whiteboard.png');
@@ -83,15 +133,23 @@ class Whiteboard {
     });
   }
 
-  clearCanvas() {
+  clearStaticCanvas() {
     this.shapes = [];
-    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.context.beginPath();
+    this.staticCanvasContext.clearRect(0, 0, this.staticCanvas.width, this.staticCanvas.height);
+    this.staticCanvasContext.beginPath();
+  }
+
+  clearDynamicCanvas() {
+    this.dynamicCanvasContext.clearRect(0, 0, this.dynamicCanvas.width, this.dynamicCanvas.height);
+    this.dynamicCanvasContext.beginPath();
   }
 
   resizeCanvas() {
-    this.context.canvas.height = window.innerHeight;
-    this.context.canvas.width = window.innerWidth;
+    this.staticCanvasContext.canvas.height = window.innerHeight;
+    this.staticCanvasContext.canvas.width = window.innerWidth;
+
+    this.dynamicCanvasContext.canvas.height = window.innerHeight;
+    this.dynamicCanvasContext.canvas.width = window.innerWidth;
 
     this.scaleCanvas();
   }
@@ -99,10 +157,15 @@ class Whiteboard {
   scaleCanvas() {
     const scale = window.devicePixelRatio;
 
-    this.canvas.height = Math.floor(window.innerHeight * scale);
-    this.canvas.width = Math.floor(window.innerWidth * scale);
+    this.staticCanvas.height = Math.floor(window.innerHeight * scale);
+    this.staticCanvas.width = Math.floor(window.innerWidth * scale);
 
-    this.context.scale(scale, scale);
+    this.staticCanvasContext.scale(scale, scale);
+
+    this.dynamicCanvas.height = Math.floor(window.innerHeight * scale);
+    this.dynamicCanvas.width = Math.floor(window.innerWidth * scale);
+
+    this.dynamicCanvasContext.scale(scale, scale);
 
     this.redrawCanvas();
   }
@@ -112,6 +175,11 @@ class Whiteboard {
       switch (shape.type) {
         case SHAPE_TYPES.LINE: {
           this.drawLine(shape.points);
+          break;
+        }
+        case SHAPE_TYPES.RECTANGLE: {
+          this.drawRectangle(shape.points);
+          break;
         }
       }
     })
@@ -123,11 +191,28 @@ class Whiteboard {
         return;
       }
 
-      this.context.moveTo(point.x, point.y);
+      this.staticCanvasContext.moveTo(point.x, point.y);
 
-      this.context.lineTo(points[i + 1].x, points[i + 1].y);
+      this.staticCanvasContext.lineTo(points[i + 1].x, points[i + 1].y);
 
-      this.context.stroke();
+      this.staticCanvasContext.stroke();
     })
+  }
+
+  drawRectangle(points) {
+    const startingX = points[0].x;
+    const startingY = points[0].y;
+
+    const endingX = points[1].x;
+    const endingY = points[1].y;
+
+    this.staticCanvasContext.rect(startingX, startingY, endingX - startingX, endingY - startingY);
+    this.staticCanvasContext.stroke();
+  }
+
+  setSelectedShapeType(shapeType) {
+    if (SHAPE_TYPES[shapeType]) {
+      this.selectedShapeType = SHAPE_TYPES[shapeType];
+    }
   }
 }
