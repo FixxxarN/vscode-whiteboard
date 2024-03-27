@@ -24,6 +24,10 @@ class Whiteboard {
     this.dynamicCanvasContext.lineCap = 'round';
     this.dynamicCanvasContext.lineJoin = 'round';
 
+    this.staticCanvasContext.lineWidth = 2;
+    this.staticCanvasContext.lineCap = 'round';
+    this.staticCanvasContext.lineJoin = 'round';
+
     this.shapes = [];
     this.selectedShapeType = SHAPE_TYPES.LINE;
   }
@@ -71,7 +75,6 @@ class Whiteboard {
   handleMouseUp(e) {
     switch (this.selectedShapeType) {
       case SHAPE_TYPES.LINE: {
-        this.clearDynamicCanvas();
         break;
       }
       case SHAPE_TYPES.RECTANGLE: {
@@ -155,8 +158,11 @@ class Whiteboard {
     });
   }
 
-  clearStaticCanvas() {
+  clearShapes() {
     this.shapes = [];
+  }
+
+  clearStaticCanvas() {
     this.staticCanvasContext.clearRect(0, 0, this.staticCanvas.width, this.staticCanvas.height);
     this.staticCanvasContext.beginPath();
   }
@@ -193,6 +199,7 @@ class Whiteboard {
   }
 
   redrawCanvas() {
+    this.clearStaticCanvas();
     this.shapes.forEach((shape) => {
       switch (shape.type) {
         case SHAPE_TYPES.LINE: {
@@ -212,6 +219,7 @@ class Whiteboard {
   }
 
   drawLine(points) {
+    this.staticCanvasContext.beginPath();
     points.forEach((point, i) => {
       if (!points[i + 1]) {
         return;

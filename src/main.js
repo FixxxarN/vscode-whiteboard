@@ -16,6 +16,7 @@ document.getElementById('export-button').onclick = () => {
 }
 
 document.getElementById('clear-button').onclick = () => {
+  whiteboard.clearShapes();
   whiteboard.clearStaticCanvas();
 }
 
