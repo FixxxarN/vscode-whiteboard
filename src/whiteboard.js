@@ -2,6 +2,10 @@
 /* eslint-disable no-undef */
 // @ts-nocheck
 
+import Line from "./Whiteboard/Shape/Line/line.js ";
+import Rectangle from "./Whiteboard/Shape/Rectangle/rectangle.js";
+import Circle from "./Whiteboard/Shape/Circle/circle.js";
+
 const MOUSE_STATES = {
   DOWN: 'DOWN',
   UP: 'UP'
@@ -45,10 +49,27 @@ class Whiteboard {
   initiateCanvasEventListeners() {
     this.dynamicCanvas.addEventListener('mousedown', (e) => {
       this.mouseState = MOUSE_STATES.DOWN;
-      this.currentShape = {
-        type: this.selectedShapeType,
-        points: [{ x: e.clientX - this.dynamicCanvas.offsetLeft, y: e.clientY - this.dynamicCanvas.offsetTop }],
+
+      const initialPoint = { x: e.clientX - this.dynamicCanvas.offsetLeft, y: e.clientY - this.dynamicCanvas.offsetTop };
+
+      switch (this.selectedShapeType) {
+        case SHAPE_TYPES.LINE: {
+          this.currentShape = new Line([initialPoint]);
+          break;
+        }
+        case SHAPE_TYPES.RECTANGLE: {
+          this.currentShape = new Rectangle([initialPoint]);
+          break;
+        }
+        case SHAPE_TYPES.CIRCLE: {
+          this.currentShape = new Circle([initialPoint]);
+          break;
+        }
+        default: {
+          break;
+        }
       }
+
       this.dynamicCanvasContext.beginPath();
     });
 
@@ -73,19 +94,7 @@ class Whiteboard {
   }
 
   handleMouseUp(e) {
-    switch (this.selectedShapeType) {
-      case SHAPE_TYPES.LINE: {
-        break;
-      }
-      case SHAPE_TYPES.RECTANGLE: {
-        this.currentShape.points.push({ x: e.clientX - this.dynamicCanvas.offsetLeft, y: e.clientY - this.dynamicCanvas.offsetTop });
-        break;
-      }
-      case SHAPE_TYPES.CIRCLE: {
-        this.currentShape.points.push({ x: e.clientX - this.dynamicCanvas.offsetLeft, y: e.clientY - this.dynamicCanvas.offsetTop });
-        break;
-      }
-    }
+    this.currentShape.points.push({ x: e.clientX - this.dynamicCanvas.offsetLeft, y: e.clientY - this.dynamicCanvas.offsetTop });
 
     this.shapes.push(this.currentShape);
     this.currentShape = undefined;
@@ -95,55 +104,7 @@ class Whiteboard {
   }
 
   handleMouseMove(e) {
-    switch (this.selectedShapeType) {
-      case SHAPE_TYPES.LINE: {
-        this.drawOngoingLine(e);
-        break;
-      }
-      case SHAPE_TYPES.RECTANGLE: {
-        this.drawOngoingRectangle(e);
-        break;
-      }
-      case SHAPE_TYPES.CIRCLE: {
-        this.drawOngoingCircle(e);
-        break;
-      }
-    }
-  }
-
-  drawOngoingLine(e) {
-    this.dynamicCanvasContext.moveTo(this.currentShape.points[this.currentShape.points.length - 1].x, this.currentShape.points[this.currentShape.points.length - 1].y);
-
-    const newPoint = { x: e.clientX - this.dynamicCanvas.offsetLeft, y: e.clientY - this.dynamicCanvas.offsetTop }
-    this.dynamicCanvasContext.lineTo(newPoint.x, newPoint.y);
-
-    this.dynamicCanvasContext.stroke();
-
-    this.currentShape.points.push(newPoint);
-  }
-
-  drawOngoingRectangle(e) {
-    this.clearDynamicCanvas();
-
-    const startingX = this.currentShape.points[0].x;
-    const startingY = this.currentShape.points[0].y;
-
-    const newPoint = { x: e.clientX - this.dynamicCanvas.offsetLeft, y: e.clientY - this.dynamicCanvas.offsetTop }
-
-    this.dynamicCanvasContext.rect(startingX, startingY, newPoint.x - startingX, newPoint.y - startingY);
-    this.dynamicCanvasContext.stroke();
-  }
-
-  drawOngoingCircle(e) {
-    this.clearDynamicCanvas();
-
-    const startingX = this.currentShape.points[0].x;
-    const startingY = this.currentShape.points[0].y;
-
-    const newPoint = { x: e.clientX - this.dynamicCanvas.offsetLeft, y: e.clientY - this.dynamicCanvas.offsetTop }
-
-    this.dynamicCanvasContext.arc(startingX + ((newPoint.x - startingX) / 2), startingY + ((newPoint.y - startingY) / 2), Math.abs((newPoint.x - startingX) / 2), 0, 2 * Math.PI);
-    this.dynamicCanvasContext.stroke();
+    this.currentShape.drawOngoing(e, this.dynamicCanvas, this.dynamicCanvasContext, () => this.clearDynamicCanvas());
   }
 
   export() {
@@ -201,60 +162,9 @@ class Whiteboard {
   redrawCanvas() {
     this.clearStaticCanvas();
     this.shapes.forEach((shape) => {
-      switch (shape.type) {
-        case SHAPE_TYPES.LINE: {
-          this.drawLine(shape.points);
-          break;
-        }
-        case SHAPE_TYPES.RECTANGLE: {
-          this.drawRectangle(shape.points);
-          break;
-        }
-        case SHAPE_TYPES.CIRCLE: {
-          this.drawCircle(shape.points);
-          break;
-        }
-      }
+      this.staticCanvasContext.beginPath();
+      shape.draw(this.staticCanvasContext);
     })
-  }
-
-  drawLine(points) {
-    this.staticCanvasContext.beginPath();
-    points.forEach((point, i) => {
-      if (!points[i + 1]) {
-        return;
-      }
-
-      this.staticCanvasContext.moveTo(point.x, point.y);
-
-      this.staticCanvasContext.lineTo(points[i + 1].x, points[i + 1].y);
-
-      this.staticCanvasContext.stroke();
-    })
-  }
-
-  drawRectangle(points) {
-    this.staticCanvasContext.beginPath();
-    const startingX = points[0].x;
-    const startingY = points[0].y;
-
-    const endingX = points[1].x;
-    const endingY = points[1].y;
-
-    this.staticCanvasContext.rect(startingX, startingY, endingX - startingX, endingY - startingY);
-    this.staticCanvasContext.stroke();
-  }
-
-  drawCircle(points) {
-    this.staticCanvasContext.beginPath();
-    const startingX = points[0].x;
-    const startingY = points[0].y;
-
-    const endingX = points[1].x;
-    const endingY = points[1].y;
-
-    this.staticCanvasContext.arc(startingX + ((endingX - startingX) / 2), startingY + ((endingY - startingY) / 2), Math.abs((endingX - startingX) / 2), 0, 2 * Math.PI);
-    this.staticCanvasContext.stroke();
   }
 
   setSelectedShapeType(shapeType) {
