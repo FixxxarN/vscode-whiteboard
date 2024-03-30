@@ -2,9 +2,9 @@
 /* eslint-disable no-undef */
 // @ts-nocheck
 
-import Line from "./Whiteboard/Shape/Line/line.js ";
-import Rectangle from "./Whiteboard/Shape/Rectangle/rectangle.js";
-import Circle from "./Whiteboard/Shape/Circle/circle.js";
+import Line from "./Shape/Line/line.js ";
+import Rectangle from "./Shape/Rectangle/rectangle.js";
+import Circle from "./Shape/Circle/circle.js";
 
 const MOUSE_STATES = {
   DOWN: 'DOWN',

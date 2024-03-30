@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 // @ts-nocheck
-import Whiteboard from "./whiteboard.js";
+import Whiteboard from "./Whiteboard/whiteboard.js";
 
 const staticCanvas = document.getElementById('whiteboard-static');
 const staticCanvasContext = staticCanvas.getContext('2d');
