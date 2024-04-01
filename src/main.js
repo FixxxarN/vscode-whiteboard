@@ -10,16 +10,16 @@ const dynamicCanvasContext = dynamicCanvas.getContext('2d');
 
 let whiteboard = new Whiteboard(staticCanvas, staticCanvasContext, dynamicCanvas, dynamicCanvasContext);
 
-whiteboard.initiateCanvas();
-whiteboard.initiateCanvasEventListeners();
+whiteboard.initiateCanvases();
+whiteboard.initiateCanvasesEventListeners();
 
 document.getElementById('export-button').onclick = () => {
-  whiteboard.export();
+  whiteboard.staticCanvas.export();
 }
 
 document.getElementById('clear-button').onclick = () => {
-  whiteboard.clearShapes();
-  whiteboard.clearStaticCanvas();
+  whiteboard.staticCanvas.clear();
+  whiteboard.staticCanvas.clearShapes();
 }
 
 document.getElementById('line-shape-button').onclick = () => {
