@@ -1,9 +1,11 @@
 # Change Log
 
-All notable changes to the "vscode-whiteboard" extension will be documented in this file.
+## [1.0.0] - 2024-04-01
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+### Added
 
-## [Unreleased]
-
-- Initial release
+- Drawing lines on the canvas
+- Drawing rectangles on the canvas
+- Drawing circles on the canvas
+- Clearing the canvas
+- Exporting the canvas to .png
