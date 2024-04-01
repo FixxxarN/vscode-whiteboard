@@ -21,12 +21,6 @@ class Whiteboard {
     this.dynamicCanvas.initiateEventListeners();
     this.staticCanvas.initiateEventListeners();
   }
-
-  setSelectedShapeType(shapeType) {
-    if (SHAPE_TYPES[shapeType]) {
-      this.dynamicCanvas.selectedShapeType = SHAPE_TYPES[shapeType];
-    }
-  }
 }
 
 export default Whiteboard;

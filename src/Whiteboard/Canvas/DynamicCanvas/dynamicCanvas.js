@@ -73,6 +73,12 @@ class DynamicCanvas extends Canvas {
   handleMouseMove(e) {
     this.currentShape.drawOngoing(e, this.canvas, this.context, () => this.clear());
   }
+
+  setSelectedShapeType(shapeType) {
+    if (SHAPE_TYPES[shapeType]) {
+      this.selectedShapeType = SHAPE_TYPES[shapeType];
+    }
+  }
 }
 
 export default DynamicCanvas;

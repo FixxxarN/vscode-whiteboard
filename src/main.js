@@ -23,14 +23,14 @@ document.getElementById('clear-button').onclick = () => {
 }
 
 document.getElementById('line-shape-button').onclick = () => {
-  whiteboard.setSelectedShapeType('LINE');
+  whiteboard.dynamicCanvas.setSelectedShapeType('LINE');
 }
 
 document.getElementById('rectangle-shape-button').onclick = () => {
-  whiteboard.setSelectedShapeType('RECTANGLE');
+  whiteboard.dynamicCanvas.setSelectedShapeType('RECTANGLE');
 }
 
 document.getElementById('circle-shape-button').onclick = () => {
-  whiteboard.setSelectedShapeType('CIRCLE');
+  whiteboard.dynamicCanvas.setSelectedShapeType('CIRCLE');
 }
 
