@@ -161,10 +161,16 @@ class Whiteboard {
 
   redrawCanvas() {
     this.clearStaticCanvas();
+    this.drawBackground();
     this.shapes.forEach((shape) => {
       this.staticCanvasContext.beginPath();
       shape.draw(this.staticCanvasContext);
     })
+  }
+
+  drawBackground() {
+    this.staticCanvasContext.fillStyle = '#fff';
+    this.staticCanvasContext.fillRect(0, 0, this.staticCanvas.width, this.staticCanvas.height);
   }
 
   setSelectedShapeType(shapeType) {
