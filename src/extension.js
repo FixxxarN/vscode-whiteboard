@@ -11,7 +11,7 @@ function activate(context) {
 			currentPanel.reveal(columnToShowIn);
 		}
 		else {
-			currentPanel = vscode.window.createWebviewPanel('vscode-whiteboard', 'Whiteboard', columnToShowIn || vscode.ViewColumn.One, { enableScripts: true, localResourceRoots: [context.extensionUri] });
+			currentPanel = vscode.window.createWebviewPanel('vscode-whiteboard', 'Whiteboard', columnToShowIn || vscode.ViewColumn.One, { enableScripts: true, localResourceRoots: [vscode.Uri.joinPath(context.extensionUri, 'src')] });
 		}
 
 		currentPanel.webview.html = getWebviewContent(context.extensionUri, currentPanel);
@@ -23,8 +23,13 @@ function activate(context) {
 }
 
 function getWebviewContent(extensionUri, currentPanel) {
-	const mainUri = currentPanel.webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'src', 'main.js'));
-	const stylesUri = currentPanel.webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'src', 'styles.css'));
+	const mainPath = vscode.Uri.joinPath(extensionUri, 'src', 'main.js');
+
+	const mainUri = currentPanel.webview.asWebviewUri(mainPath);
+
+	const stylesPath = vscode.Uri.joinPath(extensionUri, 'src', 'styles.css');
+
+	const stylesUri = currentPanel.webview.asWebviewUri(stylesPath);
 
 	const nonce = getNonce();
 

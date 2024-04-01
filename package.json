@@ -16,7 +16,7 @@
     "Visualization"
   ],
   "activationEvents": [],
-  "main": "./dist/extension",
+  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
