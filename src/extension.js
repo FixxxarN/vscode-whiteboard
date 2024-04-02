@@ -34,6 +34,7 @@ function getWebviewContent(extensionUri, currentPanel) {
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<title>Visual Studio Code - Whiteboard</title>
 			<link href="${stylesUri}" rel="stylesheet">
+			<script>var exports = {};</script>
 			</head>
 			<body>
 			<div class="interactives-container">
