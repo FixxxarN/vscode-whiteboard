@@ -1,13 +1,14 @@
 'use strict';
 
+const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 const config = {
   target: 'node',
-  entry: './src/extension.js',
+  entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'extension.js',
+    filename: 'bundle.js',
     libraryTarget: 'commonjs',
     devtoolModuleFilenameTemplate: '../[resource-path]'
   },
@@ -37,6 +38,14 @@ const config = {
       },
     ],
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: path.resolve(__dirname, 'src', 'extension.js'), to: path.resolve(__dirname, 'dist') },
+        { from: path.resolve(__dirname, 'src', 'styles.css'), to: path.resolve(__dirname, 'dist') },
+      ],
+    }),
+  ],
 };
 
 module.exports = config;

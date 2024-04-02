@@ -1,5 +1,4 @@
 const vscode = require('vscode');
-const { getNonce } = require('./utils');
 
 function activate(context) {
 	let currentPanel = undefined;
@@ -11,7 +10,7 @@ function activate(context) {
 			currentPanel.reveal(columnToShowIn);
 		}
 		else {
-			currentPanel = vscode.window.createWebviewPanel('vscode-whiteboard', 'Whiteboard', columnToShowIn || vscode.ViewColumn.One, { enableScripts: true, localResourceRoots: [vscode.Uri.joinPath(context.extensionUri, 'src')] });
+			currentPanel = vscode.window.createWebviewPanel('vscode-whiteboard', 'Whiteboard', columnToShowIn || vscode.ViewColumn.One, { enableScripts: true, localResourceRoots: [vscode.Uri.joinPath(context.extensionUri, 'dist')] });
 		}
 
 		currentPanel.webview.html = getWebviewContent(context.extensionUri, currentPanel);
@@ -23,15 +22,9 @@ function activate(context) {
 }
 
 function getWebviewContent(extensionUri, currentPanel) {
-	const mainPath = vscode.Uri.joinPath(extensionUri, 'src', 'main.js');
+	const mainUri = currentPanel.webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'dist', 'bundle.js'));
 
-	const mainUri = currentPanel.webview.asWebviewUri(mainPath);
-
-	const stylesPath = vscode.Uri.joinPath(extensionUri, 'src', 'styles.css');
-
-	const stylesUri = currentPanel.webview.asWebviewUri(stylesPath);
-
-	const nonce = getNonce();
+	const stylesUri = currentPanel.webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'dist', 'styles.css'));
 
 	return `
 	<!DOCTYPE html>
@@ -41,20 +34,20 @@ function getWebviewContent(extensionUri, currentPanel) {
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<title>Visual Studio Code - Whiteboard</title>
 			<link href="${stylesUri}" rel="stylesheet">
-			<script type="module" nonce="${nonce}" src="${mainUri}" defer></script>
-		</head>
-		<body>
+			</head>
+			<body>
 			<div class="interactives-container">
-				<button id="export-button">Export</button>
-				<button id="clear-button">Clear</button>
-				<button id="line-shape-button">Line</button>
-				<button id="rectangle-shape-button">Rectangle</button>
-				<button id="circle-shape-button">Circle</button>
+			<button id="export-button">Export</button>
+			<button id="clear-button">Clear</button>
+			<button id="line-shape-button">Line</button>
+			<button id="rectangle-shape-button">Rectangle</button>
+			<button id="circle-shape-button">Circle</button>
 			</div>
 			<canvas id="whiteboard-static"></canvas>
 			<canvas id="whiteboard-dynamic"></canvas>
-		</body>
-	</html>
+			<script type="module" src="${mainUri}" defer></script>
+			</body>
+			</html>
 	`
 }
 
