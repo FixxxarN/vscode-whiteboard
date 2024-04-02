@@ -3,6 +3,7 @@ import Canvas from "../canvas.js";
 import Line from "../../Shape/Line/line.js";
 import Rectangle from "../../Shape/Rectangle/rectangle.js";
 import Circle from "../../Shape/Circle/circle.js";
+import Arrow from "../../Shape/Arrow/arrow.js";
 import { MOUSE_STATES, SHAPE_TYPES } from "../../constants.js";
 
 class DynamicCanvas extends Canvas {
@@ -31,6 +32,9 @@ class DynamicCanvas extends Canvas {
         case SHAPE_TYPES.CIRCLE: {
           this.currentShape = new Circle([initialPoint]);
           break;
+        }
+        case SHAPE_TYPES.ARROW: {
+          this.currentShape = new Arrow([initialPoint]);
         }
         default: {
           break;

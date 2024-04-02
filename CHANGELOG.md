@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.2.0] - 2024-04-02
+
+### Added
+
+- New shape: Arrow
+
 ## [1.1.0] - 2024-04-02
 
 ### Updated

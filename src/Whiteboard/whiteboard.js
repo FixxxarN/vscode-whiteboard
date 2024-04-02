@@ -4,7 +4,6 @@
 
 import StaticCanvas from "./Canvas/StaticCanvas/staticCanvas.js";
 import DynamicCanvas from "./Canvas/DynamicCanvas/dynamicCanvas.js";
-import { SHAPE_TYPES } from "./constants.js";
 
 class Whiteboard {
   constructor(staticCanvas, staticCanvasContext, dynamicCanvas, dynamicCanvasContext) {

@@ -34,3 +34,6 @@ document.getElementById('circle-shape-button').onclick = () => {
   whiteboard.dynamicCanvas.setSelectedShapeType('CIRCLE');
 }
 
+document.getElementById('arrow-shape-button').onclick = () => {
+  whiteboard.dynamicCanvas.setSelectedShapeType('ARROW');
+}

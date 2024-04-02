@@ -43,6 +43,7 @@ function getWebviewContent(extensionUri, currentPanel) {
 			<button id="line-shape-button">Line</button>
 			<button id="rectangle-shape-button">Rectangle</button>
 			<button id="circle-shape-button">Circle</button>
+			<button id="arrow-shape-button">Arrow</button>
 			</div>
 			<canvas id="whiteboard-static"></canvas>
 			<canvas id="whiteboard-dynamic"></canvas>
