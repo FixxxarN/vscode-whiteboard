@@ -1,12 +1,14 @@
 // @ts-nocheck
 
 import Canvas from "../canvas.js";
+import { initializeEventListenersForOS } from "./eventHandlers.js";
 
 class StaticCanvas extends Canvas {
   constructor(canvas, context) {
     super(canvas, context);
 
     this.shapes = [];
+    this.history = [];
   }
 
   initiate() {
@@ -15,6 +17,7 @@ class StaticCanvas extends Canvas {
   }
 
   initiateEventListeners() {
+    initializeEventListenersForOS(this)
     window.addEventListener('resize', () => {
       this.resize();
       this.redraw();

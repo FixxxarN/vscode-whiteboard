@@ -72,6 +72,7 @@ class DynamicCanvas extends Canvas {
 
     this.clear();
     this.staticCanvas.redraw();
+    this.staticCanvas.history = [];
   }
 
   handleMouseMove(e) {

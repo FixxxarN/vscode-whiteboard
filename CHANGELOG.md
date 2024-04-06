@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.3.0] - 2024-04-06
+
+### Added
+
+- Undo/redo functionality via shortcuts
+
 ## [1.2.0] - 2024-04-02
 
 ### Added
