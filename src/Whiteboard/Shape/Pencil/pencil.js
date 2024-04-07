@@ -1,6 +1,6 @@
 import Shape from "../shape.js";
 
-class Line extends Shape {
+class Pencil extends Shape {
   constructor(points) {
     super(points);
   }
@@ -32,4 +32,4 @@ class Line extends Shape {
   }
 }
 
-export default Line;
+export default Pencil;

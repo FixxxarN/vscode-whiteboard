@@ -1,5 +1,5 @@
 export const SHAPE_TYPES = {
-  LINE: 'LINE',
+  PENCIL: 'PENCIL',
   RECTANGLE: 'RECTANGLE',
   CIRCLE: 'CIRCLE',
   ARROW: 'ARROW'

@@ -22,8 +22,8 @@ document.getElementById('clear-button').onclick = () => {
   whiteboard.staticCanvas.clearShapes();
 }
 
-document.getElementById('line-shape-button').onclick = () => {
-  whiteboard.dynamicCanvas.setSelectedShapeType('LINE');
+document.getElementById('pencil-shape-button').onclick = () => {
+  whiteboard.dynamicCanvas.setSelectedShapeType('PENCIL');
 }
 
 document.getElementById('rectangle-shape-button').onclick = () => {

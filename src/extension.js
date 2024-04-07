@@ -40,7 +40,7 @@ function getWebviewContent(extensionUri, currentPanel) {
 			<div class="interactives-container">
 			<button id="export-button">Export</button>
 			<button id="clear-button">Clear</button>
-			<button id="line-shape-button">Line</button>
+			<button id="pencil-shape-button">Pencil</button>
 			<button id="rectangle-shape-button">Rectangle</button>
 			<button id="circle-shape-button">Circle</button>
 			<button id="arrow-shape-button">Arrow</button>

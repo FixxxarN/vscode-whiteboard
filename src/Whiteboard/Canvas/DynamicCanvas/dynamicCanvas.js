@@ -1,6 +1,6 @@
 // @ts-nocheck
 import Canvas from "../canvas.js";
-import Line from "../../Shape/Line/line.js";
+import Pencil from "../../Shape/Pencil/pencil.js";
 import Rectangle from "../../Shape/Rectangle/rectangle.js";
 import Circle from "../../Shape/Circle/circle.js";
 import Arrow from "../../Shape/Arrow/arrow.js";
@@ -10,7 +10,7 @@ class DynamicCanvas extends Canvas {
   constructor(canvas, context, staticCanvas) {
     super(canvas, context);
 
-    this.selectedShapeType = SHAPE_TYPES.LINE;
+    this.selectedShapeType = SHAPE_TYPES.PENCIL;
     this.staticCanvas = staticCanvas;
   }
 
@@ -21,8 +21,8 @@ class DynamicCanvas extends Canvas {
       const initialPoint = { x: e.clientX - this.canvas.offsetLeft, y: e.clientY - this.canvas.offsetTop };
 
       switch (this.selectedShapeType) {
-        case SHAPE_TYPES.LINE: {
-          this.currentShape = new Line([initialPoint]);
+        case SHAPE_TYPES.PENCIL: {
+          this.currentShape = new Pencil([initialPoint]);
           break;
         }
         case SHAPE_TYPES.RECTANGLE: {
