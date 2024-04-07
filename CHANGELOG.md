@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.3.2] - 2024-04-06
+
+### Updated
+
+- Updated line to be pencil instead
+
 ## [1.3.0] - 2024-04-06
 
 ### Added
