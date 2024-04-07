@@ -1,11 +1,15 @@
 import Shape from "../shape.js";
 
 class Arrow extends Shape {
-  constructor(points) {
-    super(points);
+  constructor(points, strokeWidth) {
+    super(points, strokeWidth);
   }
 
   draw(context) {
+    context.lineWidth = this.strokeWidth;
+    context.lineCap = 'round';
+    context.lineJoin = 'round';
+
     const startingX = this.points[0].x;
     const startingY = this.points[0].y;
 
@@ -24,6 +28,10 @@ class Arrow extends Shape {
 
   drawOngoing(event, canvas, context, clearDynamicCanvas) {
     clearDynamicCanvas();
+
+    context.lineWidth = this.strokeWidth;
+    context.lineCap = 'round';
+    context.lineJoin = 'round';
 
     const startingX = this.points[0].x;
     const startingY = this.points[0].y;

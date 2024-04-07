@@ -1,34 +1,59 @@
 import Shape from "../shape.js";
 
 class Pencil extends Shape {
-  constructor(points) {
-    super(points);
+  constructor(points, strokeWidth) {
+    super(points, strokeWidth);
   }
 
   draw(context) {
-    this.points.forEach((point, i) => {
+    context.lineWidth = this.strokeWidth;
+    context.lineCap = 'round';
+    context.lineJoin = 'round';
+
+    context.moveTo(this.points[0].x, this.points[0].y);
+
+    for (let i = 1; i < this.points.length; i++) {
       if (!this.points[i + 1]) {
         return;
       }
 
-      context.moveTo(point.x, point.y);
-
-      context.lineTo(this.points[i + 1].x, this.points[i + 1].y);
+      context.lineTo(this.points[i].x, this.points[i].y);
 
       context.stroke();
-    })
+    }
   }
 
   drawOngoing(event, canvas, context) {
-    context.moveTo(this.points[this.points.length - 1].x, this.points[this.points.length - 1].y);
+    const pointsOnlyIncludeInitialValue = this.points.length === 1;
 
-    const newPoint = { x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop }
+    if (pointsOnlyIncludeInitialValue) {
+      context.beginPath();
 
-    context.lineTo(newPoint.x, newPoint.y);
+      context.lineWidth = this.strokeWidth;
+      context.lineCap = 'round';
+      context.lineJoin = 'round';
 
+      context.moveTo(this.points[0].x, this.points[0].y);
+
+      this.points.push({ x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop });
+
+      return;
+    }
+
+    const startingX = this.points[this.points.length - 1].x;
+    const startingY = this.points[this.points.length - 1].y;
+
+    const endingX = event.clientX - canvas.offsetLeft;
+    const endingY = event.clientY - canvas.offsetTop;
+
+    if (startingX === endingX && startingY === endingY) {
+      return;
+    }
+
+    context.lineTo(endingX, endingY);
     context.stroke();
 
-    this.points.push(newPoint);
+    this.points.push({ x: endingX, y: endingY });
   }
 }
 

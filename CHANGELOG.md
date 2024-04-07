@@ -1,6 +1,12 @@
 # Change Log
 
-## [1.3.2] - 2024-04-06
+## [1.4.0] - 2024-04-07
+
+### Added
+
+- Different stroke widths that the user can choose from when drawing
+
+## [1.3.2] - 2024-04-07
 
 ### Updated
 

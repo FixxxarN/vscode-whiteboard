@@ -1,6 +1,7 @@
 class Shape {
-  constructor(points) {
+  constructor(points, strokeWidth) {
     this.points = points;
+    this.strokeWidth = strokeWidth;
   }
 
   draw() { }

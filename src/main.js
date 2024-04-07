@@ -37,3 +37,7 @@ document.getElementById('circle-shape-button').onclick = () => {
 document.getElementById('arrow-shape-button').onclick = () => {
   whiteboard.dynamicCanvas.setSelectedShapeType('ARROW');
 }
+
+document.getElementById('stroke-width-selector').onchange = (e) => {
+  whiteboard.setStrokeWidth(e.target.value)
+}

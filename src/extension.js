@@ -44,6 +44,18 @@ function getWebviewContent(extensionUri, currentPanel) {
 			<button id="rectangle-shape-button">Rectangle</button>
 			<button id="circle-shape-button">Circle</button>
 			<button id="arrow-shape-button">Arrow</button>
+			<select id="stroke-width-selector">
+			<option value="1">1px</option>
+			<option value="2">2px</option>
+			<option value="3">3px</option>
+			<option value="4">4px</option>
+			<option value="5">5px</option>
+			<option value="6">6px</option>
+			<option value="7">7px</option>
+			<option value="8">8px</option>
+			<option value="9">9px</option>
+			<option value="10">10px</option>
+			</select>
 			</div>
 			<canvas id="whiteboard-static"></canvas>
 			<canvas id="whiteboard-dynamic"></canvas>

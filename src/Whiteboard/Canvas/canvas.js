@@ -6,9 +6,11 @@ class Canvas {
     this.context = context;
     this.shapes = shapes;
 
-    this.context.lineWidth = 2;
-    this.context.lineCap = 'round';
-    this.context.lineJoin = 'round';
+    this.strokeWidth = 1;
+  }
+
+  setStrokeWidth(strokeWidth) {
+    this.strokeWidth = strokeWidth
   }
 
   initiate() {

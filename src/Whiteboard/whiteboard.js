@@ -20,6 +20,11 @@ class Whiteboard {
     this.dynamicCanvas.initiateEventListeners();
     this.staticCanvas.initiateEventListeners();
   }
+
+  setStrokeWidth(strokeWidth) {
+    this.dynamicCanvas.setStrokeWidth(strokeWidth);
+    this.staticCanvas.setStrokeWidth(strokeWidth);
+  }
 }
 
 export default Whiteboard;
