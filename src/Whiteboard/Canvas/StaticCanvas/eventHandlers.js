@@ -1,20 +1,20 @@
 // @ts-nocheck
 const SHORT_CUTS = {
   'MACOS': {
-    'undo': (e) => e.metaKey && !e.shiftKey && e.key === 'z',
-    'redo': (e) => e.metaKey && e.shiftKey && e.key === 'z',
+    'undo': (e) => e.metaKey && !e.shiftKey && e.key.toLowerCase() === 'z',
+    'redo': (e) => e.metaKey && e.shiftKey && e.key.toLowerCase() === 'z',
   },
   'WINDOWS': {
-    'undo': (e) => e.ctrlKey && !e.shiftKey && e.key === 'z',
-    'redo': (e) => e.ctrlKey && e.shiftKey && e.key === 'z',
+    'undo': (e) => e.ctrlKey && !e.shiftKey && e.key.toLowerCase() === 'z',
+    'redo': (e) => e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'z',
   },
   'UNIX': {
-    'undo': (e) => e.ctrlKey && !e.shiftKey && e.key === 'z',
-    'redo': (e) => e.ctrlKey && e.shiftKey && e.key === 'z',
+    'undo': (e) => e.ctrlKey && !e.shiftKey && e.key.toLowerCase() === 'z',
+    'redo': (e) => e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'z',
   },
   'LINUX': {
-    'undo': (e) => e.ctrlKey && !e.shiftKey && e.key === 'z',
-    'redo': (e) => e.ctrlKey && e.shiftKey && e.key === 'z',
+    'undo': (e) => e.ctrlKey && !e.shiftKey && e.key.toLowerCase() === 'z',
+    'redo': (e) => e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'z',
   }
 }
 
