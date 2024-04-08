@@ -1,11 +1,12 @@
 import Shape from "../shape.js";
 
 class Rectangle extends Shape {
-  constructor(points, strokeWidth) {
-    super(points, strokeWidth);
+  constructor(points, strokeWidth, strokeColor) {
+    super(points, strokeWidth, strokeColor);
   }
 
   draw(context) {
+    context.strokeStyle = this.strokeColor;
     context.lineWidth = this.strokeWidth;
     context.lineCap = 'round';
     context.lineJoin = 'round';
@@ -23,6 +24,7 @@ class Rectangle extends Shape {
   drawOngoing(event, canvas, context, clearDynamicCanvas) {
     clearDynamicCanvas();
 
+    context.strokeStyle = this.strokeColor;
     context.lineWidth = this.strokeWidth;
     context.lineCap = 'round';
     context.lineJoin = 'round';

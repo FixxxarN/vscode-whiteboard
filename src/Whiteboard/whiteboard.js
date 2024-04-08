@@ -25,6 +25,11 @@ class Whiteboard {
     this.dynamicCanvas.setStrokeWidth(strokeWidth);
     this.staticCanvas.setStrokeWidth(strokeWidth);
   }
+
+  setStrokeColor(strokeColor) {
+    this.dynamicCanvas.setStrokeColor(strokeColor);
+    this.staticCanvas.setStrokeColor(strokeColor);
+  }
 }
 
 export default Whiteboard;

@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.5.0] - 2024-04-08
+
+### Added
+
+- Different stroke colors that the user can choose from when drawing
+
 ## [1.4.0] - 2024-04-07
 
 ### Added

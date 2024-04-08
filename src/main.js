@@ -41,3 +41,7 @@ document.getElementById('arrow-shape-button').onclick = () => {
 document.getElementById('stroke-width-selector').onchange = (e) => {
   whiteboard.setStrokeWidth(e.target.value)
 }
+
+document.getElementById('stroke-color-selector').onchange = (e) => {
+  whiteboard.setStrokeColor(e.target.value)
+}

@@ -1,11 +1,12 @@
 import Shape from "../shape.js";
 
 class Pencil extends Shape {
-  constructor(points, strokeWidth) {
-    super(points, strokeWidth);
+  constructor(points, strokeWidth, strokeColor) {
+    super(points, strokeWidth, strokeColor);
   }
 
   draw(context) {
+    context.strokeStyle = this.strokeColor;
     context.lineWidth = this.strokeWidth;
     context.lineCap = 'round';
     context.lineJoin = 'round';
@@ -29,6 +30,7 @@ class Pencil extends Shape {
     if (pointsOnlyIncludeInitialValue) {
       context.beginPath();
 
+      context.strokeStyle = this.strokeColor;
       context.lineWidth = this.strokeWidth;
       context.lineCap = 'round';
       context.lineJoin = 'round';

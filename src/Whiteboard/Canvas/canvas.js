@@ -7,10 +7,15 @@ class Canvas {
     this.shapes = shapes;
 
     this.strokeWidth = 1;
+    this.strokeColor = 'black';
   }
 
   setStrokeWidth(strokeWidth) {
-    this.strokeWidth = strokeWidth
+    this.strokeWidth = strokeWidth;
+  }
+
+  setStrokeColor(strokeColor) {
+    this.strokeColor = strokeColor;
   }
 
   initiate() {

@@ -22,19 +22,19 @@ class DynamicCanvas extends Canvas {
 
       switch (this.selectedShapeType) {
         case SHAPE_TYPES.PENCIL: {
-          this.currentShape = new Pencil([initialPoint], this.strokeWidth);
+          this.currentShape = new Pencil([initialPoint], this.strokeWidth, this.strokeColor);
           break;
         }
         case SHAPE_TYPES.RECTANGLE: {
-          this.currentShape = new Rectangle([initialPoint], this.strokeWidth);
+          this.currentShape = new Rectangle([initialPoint], this.strokeWidth, this.strokeColor);
           break;
         }
         case SHAPE_TYPES.CIRCLE: {
-          this.currentShape = new Circle([initialPoint], this.strokeWidth);
+          this.currentShape = new Circle([initialPoint], this.strokeWidth, this.strokeColor);
           break;
         }
         case SHAPE_TYPES.ARROW: {
-          this.currentShape = new Arrow([initialPoint], this.strokeWidth);
+          this.currentShape = new Arrow([initialPoint], this.strokeWidth, this.strokeColor);
         }
         default: {
           break;
