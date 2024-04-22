@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 // @ts-nocheck
+const vscode = acquireVsCodeApi();
+
 import Whiteboard from "./Whiteboard/whiteboard.js";
 
 const staticCanvas = document.getElementById('whiteboard-static');
@@ -8,7 +10,7 @@ const staticCanvasContext = staticCanvas.getContext('2d');
 const dynamicCanvas = document.getElementById('whiteboard-dynamic');
 const dynamicCanvasContext = dynamicCanvas.getContext('2d');
 
-let whiteboard = new Whiteboard(staticCanvas, staticCanvasContext, dynamicCanvas, dynamicCanvasContext);
+let whiteboard = new Whiteboard(staticCanvas, staticCanvasContext, dynamicCanvas, dynamicCanvasContext, vscode);
 
 whiteboard.initiateCanvases();
 whiteboard.initiateCanvasesEventListeners();

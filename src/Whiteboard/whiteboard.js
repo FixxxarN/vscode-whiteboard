@@ -4,10 +4,12 @@
 
 import StaticCanvas from "./Canvas/StaticCanvas/staticCanvas.js";
 import DynamicCanvas from "./Canvas/DynamicCanvas/dynamicCanvas.js";
+import ShapeManager from "./ShapeManager/shapeManager.js";
 
 class Whiteboard {
-  constructor(staticCanvas, staticCanvasContext, dynamicCanvas, dynamicCanvasContext) {
-    this.staticCanvas = new StaticCanvas(staticCanvas, staticCanvasContext);
+  constructor(staticCanvas, staticCanvasContext, dynamicCanvas, dynamicCanvasContext, vscode) {
+    this.shapeManager = new ShapeManager(vscode);
+    this.staticCanvas = new StaticCanvas(staticCanvas, staticCanvasContext, this.shapeManager);
     this.dynamicCanvas = new DynamicCanvas(dynamicCanvas, dynamicCanvasContext, this.staticCanvas);
   }
 

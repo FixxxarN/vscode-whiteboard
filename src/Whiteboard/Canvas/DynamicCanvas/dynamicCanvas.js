@@ -67,12 +67,12 @@ class DynamicCanvas extends Canvas {
   handleMouseUp(e) {
     this.currentShape.points.push({ x: e.clientX - this.canvas.offsetLeft, y: e.clientY - this.canvas.offsetTop });
 
-    this.staticCanvas.shapes.push(this.currentShape);
+    this.staticCanvas.shapeManager.addShape(this.currentShape);
     this.currentShape = undefined;
 
     this.clear();
     this.staticCanvas.redraw();
-    this.staticCanvas.history = [];
+    this.staticCanvas.shapeManager.clearHistory();
   }
 
   handleMouseMove(e) {

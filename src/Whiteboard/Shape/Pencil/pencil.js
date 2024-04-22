@@ -1,8 +1,10 @@
+import { SHAPE_TYPES } from "../../constants.js";
 import Shape from "../shape.js";
 
 class Pencil extends Shape {
   constructor(points, strokeWidth, strokeColor) {
     super(points, strokeWidth, strokeColor);
+    this.type = SHAPE_TYPES.PENCIL;
   }
 
   draw(context) {

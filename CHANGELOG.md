@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.6.0] - 2024-04-22
+
+### Added
+
+- Persistence of state. Drawings are no longer resetted when whiteboard tab is disposed (not the active tab)
+
 ## [1.5.0] - 2024-04-08
 
 ### Added

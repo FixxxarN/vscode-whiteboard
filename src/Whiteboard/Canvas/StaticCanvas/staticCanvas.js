@@ -4,11 +4,10 @@ import Canvas from "../canvas.js";
 import { initializeEventListenersForOS } from "./eventHandlers.js";
 
 class StaticCanvas extends Canvas {
-  constructor(canvas, context) {
+  constructor(canvas, context, shapeManager) {
     super(canvas, context);
 
-    this.shapes = [];
-    this.history = [];
+    this.shapeManager = shapeManager;
   }
 
   initiate() {
@@ -27,14 +26,14 @@ class StaticCanvas extends Canvas {
   redraw() {
     this.clear();
     this.drawBackground();
-    this.shapes.forEach((shape) => {
+    this.shapeManager.shapes.forEach((shape) => {
       this.context.beginPath();
       shape.draw(this.context);
     });
   }
 
   drawBackground() {
-    this.context.fillStyle = '#eee';
+    this.context.fillStyle = '#fff';
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
@@ -51,7 +50,7 @@ class StaticCanvas extends Canvas {
   }
 
   clearShapes() {
-    this.shapes = [];
+    this.shapeManager.clearShapes();
   }
 }
 

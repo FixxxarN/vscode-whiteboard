@@ -28,8 +28,6 @@ const initializeUndoRedoEventListeners = (os, canvas) => {
       if (undoShape) {
         canvas.history.push(undoShape);
       }
-
-      canvas.redraw();
     }
     if (shortCuts.redo(e)) {
       const historyShape = canvas.history.pop();
@@ -37,9 +35,8 @@ const initializeUndoRedoEventListeners = (os, canvas) => {
       if (historyShape) {
         canvas.shapes.push(historyShape);
       }
-
-      canvas.redraw();
     }
+    canvas.redraw();
   })
 }
 

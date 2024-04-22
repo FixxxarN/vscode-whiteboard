@@ -15,7 +15,9 @@
   "categories": [
     "Visualization"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onWebviewPanel:vscodeWhiteboard"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
