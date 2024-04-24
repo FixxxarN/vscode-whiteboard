@@ -23,17 +23,17 @@ const initializeUndoRedoEventListeners = (os, canvas) => {
 
   window.addEventListener('keydown', (e) => {
     if (shortCuts.undo(e)) {
-      const undoShape = canvas.shapes.pop();
+      const undoShape = canvas.shapeManager.shapes.pop();
 
       if (undoShape) {
-        canvas.history.push(undoShape);
+        canvas.shapeManager.history.push(undoShape);
       }
     }
     if (shortCuts.redo(e)) {
-      const historyShape = canvas.history.pop();
+      const historyShape = canvas.shapeManager.history.pop();
 
       if (historyShape) {
-        canvas.shapes.push(historyShape);
+        canvas.shapeManager.shapes.push(historyShape);
       }
     }
     canvas.redraw();
