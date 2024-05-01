@@ -4,9 +4,10 @@ import { StateContext } from "../../components/StateContextProvider";
 import { CLEAR_CANVAS, EXPORT_CANVAS } from "../../common/events";
 import PubSub from "pubsub-js";
 import { exportCanvas } from "./utils";
+import { ShapesContext } from "../../components/ShapesContextProvider";
 
 const useStaticCanvasEventHandlers = (canvas, context) => {
-  const { clearShapes } = useContext(StateContext);
+  const { clearShapes } = useContext(ShapesContext);
   const { clearCanvas } = useCanvasManagement(canvas, context);
 
 

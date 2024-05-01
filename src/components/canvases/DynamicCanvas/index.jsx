@@ -5,12 +5,14 @@ import { Canvas } from "./styles.js";
 import useEventListeners from "../../../hooks/useEventListeners/index.js";
 import useResizeAndScale from "../useResizeAndScale.js";
 import useCanvasManagement from "../useCanvasManagement.js";
+import { ShapesContext } from "../../ShapesContextProvider/index.jsx";
 
 const DynamicCanvas = () => {
   const [canvas, setCanvas] = useState(undefined);
   const [context, setContext] = useState(undefined);
 
-  const { mode, currentShapeType, addShape } = useContext(StateContext);
+  const { mode, currentShapeType } = useContext(StateContext);
+  const { addShape } = useContext(ShapesContext);
 
   const currentShape = useRef(undefined);
 
