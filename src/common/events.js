@@ -1,0 +1,2 @@
+export const CLEAR_CANVAS = 'CLEAR_CANVAS';
+export const EXPORT_CANVAS = 'EXPORT_CANVAS';

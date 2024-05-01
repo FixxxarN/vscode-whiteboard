@@ -1,9 +1,11 @@
-import { SHAPE_TYPES } from "../../constants.js";
-import Shape from "../shape.js";
+import { SHAPE_TYPES } from "../../components/StateContextProvider/constants";
 
-class Arrow extends Shape {
-  constructor(points, strokeWidth, strokeColor) {
-    super(points, strokeWidth, strokeColor);
+class Arrow {
+  constructor(initialPoint, strokeWidth, strokeColor) {
+    this.points = [initialPoint];
+    this.strokeWidth = strokeWidth;
+    this.strokeColor = strokeColor;
+
     this.type = SHAPE_TYPES.ARROW;
   }
 
@@ -29,8 +31,8 @@ class Arrow extends Shape {
     context.stroke();
   }
 
-  drawOngoing(event, canvas, context, clearDynamicCanvas) {
-    clearDynamicCanvas();
+  drawOngoing(event, canvas, context, clearCanvas) {
+    clearCanvas();
 
     context.strokeStyle = this.strokeColor;
     context.lineWidth = this.strokeWidth;

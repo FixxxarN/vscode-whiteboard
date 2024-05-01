@@ -1,9 +1,11 @@
-import { SHAPE_TYPES } from "../../constants.js";
-import Shape from "../shape.js";
+import { SHAPE_TYPES } from "../../components/StateContextProvider/constants";
 
-class Pencil extends Shape {
-  constructor(points, strokeWidth, strokeColor) {
-    super(points, strokeWidth, strokeColor);
+class Pencil {
+  constructor(initialPoint, strokeWidth, strokeColor) {
+    this.points = [initialPoint];
+    this.strokeWidth = strokeWidth;
+    this.strokeColor = strokeColor;
+
     this.type = SHAPE_TYPES.PENCIL;
   }
 

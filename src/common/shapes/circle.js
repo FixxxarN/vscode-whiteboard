@@ -1,10 +1,12 @@
-import { SHAPE_TYPES } from "../../constants.js";
-import Shape from "../shape.js";
+import { SHAPE_TYPES } from "../../components/StateContextProvider/constants";
 
-class Rectangle extends Shape {
-  constructor(points, strokeWidth, strokeColor) {
-    super(points, strokeWidth, strokeColor);
-    this.type = SHAPE_TYPES.RECTANGLE;
+class Circle {
+  constructor(initialPoint, strokeWidth, strokeColor) {
+    this.points = [initialPoint];
+    this.strokeWidth = strokeWidth;
+    this.strokeColor = strokeColor;
+
+    this.type = SHAPE_TYPES.CIRCLE;
   }
 
   draw(context) {
@@ -19,12 +21,12 @@ class Rectangle extends Shape {
     const endingX = this.points[1].x;
     const endingY = this.points[1].y;
 
-    context.rect(startingX, startingY, endingX - startingX, endingY - startingY);
+    context.arc(startingX + ((endingX - startingX) / 2), startingY + ((endingY - startingY) / 2), Math.abs((endingX - startingX) / 2), 0, 2 * Math.PI);
     context.stroke();
   }
 
-  drawOngoing(event, canvas, context, clearDynamicCanvas) {
-    clearDynamicCanvas();
+  drawOngoing(event, canvas, context, clearCanvas) {
+    clearCanvas();
 
     context.strokeStyle = this.strokeColor;
     context.lineWidth = this.strokeWidth;
@@ -36,9 +38,9 @@ class Rectangle extends Shape {
 
     const newPoint = { x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop }
 
-    context.rect(startingX, startingY, newPoint.x - startingX, newPoint.y - startingY);
+    context.arc(startingX + ((newPoint.x - startingX) / 2), startingY + ((newPoint.y - startingY) / 2), Math.abs((newPoint.x - startingX) / 2), 0, 2 * Math.PI);
     context.stroke();
   }
 }
 
-export default Rectangle;
+export default Circle;

@@ -18,17 +18,17 @@ const config = {
   },
   resolve: {
     mainFields: ['browser', 'module', 'main'],
-    extensions: ['.js'],
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [
       {
-        test: /\.js$/i,
+        test: /\.js|\.jsx$/i,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env'],
+            presets: ['@babel/preset-env', ["@babel/preset-react", { "runtime": "automatic" }]],
           },
         },
       },

@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
+    "jsx": "react-jsx",
     "module": "Node16",
     "target": "ES2022",
     "checkJs": true /* Typecheck .js files. */,
-    "lib": ["ES2022"]
+    "lib": ["ES2022", "DOM"],
+    "forceConsistentCasingInFileNames": true
   },
   "exclude": ["node_modules"]
 }
