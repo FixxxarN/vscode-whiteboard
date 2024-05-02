@@ -1,8 +1,8 @@
 import { SHAPE_TYPES } from "../../components/StateContextProvider/constants";
 
 class Rectangle {
-  constructor(initialPoint, strokeWidth, strokeColor) {
-    this.points = [initialPoint];
+  constructor(points, strokeWidth, strokeColor) {
+    this.points = points;
     this.strokeWidth = strokeWidth;
     this.strokeColor = strokeColor;
 
