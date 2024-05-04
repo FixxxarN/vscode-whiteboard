@@ -1,5 +1,5 @@
 import { SHAPE_TYPES } from "../../components/StateContextProvider/constants";
-import { resolveArrowEventListeners, resolveCircleEventListeners, resolvePencilEventListeners, resolveRectangleEventListeners } from "./utils";
+import { resolveArrowEventListeners, resolveCircleEventListeners, resolvePencilEventListeners, resolveRectangleEventListeners, resolveTextEventListeners } from "./utils";
 
 const useEventListeners = (currentShapeType) => {
   switch (currentShapeType) {
@@ -14,6 +14,9 @@ const useEventListeners = (currentShapeType) => {
     }
     case SHAPE_TYPES.ARROW: {
       return resolveArrowEventListeners();
+    }
+    case SHAPE_TYPES.TEXT: {
+      return resolveTextEventListeners();
     }
     default: {
       return {}

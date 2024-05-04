@@ -2,6 +2,7 @@ import Arrow from "../../common/shapes/arrow";
 import Circle from "../../common/shapes/circle";
 import Pencil from "../../common/shapes/pencil";
 import Rectangle from "../../common/shapes/rectangle";
+import Text from "../../common/shapes/text";
 import { SHAPE_TYPES } from "../StateContextProvider/constants";
 
 export const reCreateShapes = (shapes) => {
@@ -17,6 +18,10 @@ export const reCreateShapes = (shapes) => {
     }
     if (shape.type === SHAPE_TYPES.ARROW) {
       return new Arrow(shape.points, shape.strokeWidth, shape.strokeColor);
+    }
+    if (shape.type === SHAPE_TYPES.TEXT) {
+      const text = new Text(shape.point, shape.font, shape.fillStyle).setValues(shape);
+      return text;
     }
   });
 

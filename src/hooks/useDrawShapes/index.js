@@ -18,7 +18,7 @@ const useDrawShapes = (canvas, context) => {
   }, [clearCanvas, drawBackground]);
 
   useEffect(() => {
-    if (canvas && context) {
+    if (canvas && context && shapes.length > 0) {
       redrawCanvas(shapes, canvas, context);
 
       window.addEventListener('resize', () => {

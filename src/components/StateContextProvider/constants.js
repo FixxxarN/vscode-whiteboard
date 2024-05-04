@@ -9,4 +9,5 @@ export const SHAPE_TYPES = {
   RECTANGLE: "RECTANGLE",
   CIRCLE: "CIRCLE",
   ARROW: "ARROW",
+  TEXT: 'TEXT'
 };

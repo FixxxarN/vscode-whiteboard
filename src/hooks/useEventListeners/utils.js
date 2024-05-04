@@ -2,9 +2,10 @@ import Arrow from "../../common/shapes/arrow";
 import Circle from "../../common/shapes/circle";
 import Pencil from "../../common/shapes/pencil";
 import Rectangle from "../../common/shapes/rectangle";
+import Text from "../../common/shapes/text";
 
 export const resolvePencilEventListeners = () => {
-  const onMouseDown = (event, canvas, currentShape) => {
+  const onMouseDown = (event, canvas, context, currentShape, clearCanvas) => {
     const initialPoint = { x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop };
 
     currentShape.current = new Pencil([initialPoint], 1, '#000');
@@ -22,7 +23,7 @@ export const resolvePencilEventListeners = () => {
 }
 
 export const resolveRectangleEventListeners = () => {
-  const onMouseDown = (event, canvas, currentShape) => {
+  const onMouseDown = (event, canvas, context, currentShape, clearCanvas) => {
     const initialPoint = { x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop };
 
     currentShape.current = new Rectangle([initialPoint], 1, '#000');
@@ -40,7 +41,7 @@ export const resolveRectangleEventListeners = () => {
 }
 
 export const resolveCircleEventListeners = () => {
-  const onMouseDown = (event, canvas, currentShape) => {
+  const onMouseDown = (event, canvas, context, currentShape, clearCanvas) => {
     const initialPoint = { x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop };
 
     currentShape.current = new Circle([initialPoint], 1, '#000');
@@ -58,7 +59,7 @@ export const resolveCircleEventListeners = () => {
 }
 
 export const resolveArrowEventListeners = () => {
-  const onMouseDown = (event, canvas, currentShape) => {
+  const onMouseDown = (event, canvas, context, currentShape, clearCanvas) => {
     const initialPoint = { x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop };
 
     currentShape.current = new Arrow([initialPoint], 1, '#000');
@@ -73,4 +74,31 @@ export const resolveArrowEventListeners = () => {
   }
 
   return { onMouseDown, onMouseMove, onMouseUp }
+}
+
+export const resolveTextEventListeners = () => {
+  const onMouseDown = (event, canvas, context, currentShape, clearCanvas) => {
+    if (currentShape.current) return;
+
+    canvas.tabIndex = 1;
+
+    const initialPoint = { x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop };
+
+    currentShape.current = new Text(initialPoint, '20px Arial', '#000');
+    currentShape.current.indicateTyping(context, clearCanvas);
+  }
+
+  const onKeyDown = (event, canvas, context, currentShape, clearCanvas) => {
+    if (event.key === "Escape") {
+      canvas.tabIndex = 0;
+
+      currentShape.current.removeTypingIndicator();
+      currentShape.current = undefined;
+      return;
+    }
+
+    currentShape.current.drawOngoing(event, canvas, context, clearCanvas)
+  }
+
+  return { onMouseDown, onKeyDown }
 }

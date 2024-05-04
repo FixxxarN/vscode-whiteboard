@@ -37,6 +37,11 @@ const Hotbar = () => {
     setCurrentShapeType(SHAPE_TYPES.ARROW);
   }, []);
 
+  const onTextClick = useCallback(() => {
+    setMode(MODES.DRAW);
+    setCurrentShapeType(SHAPE_TYPES.TEXT);
+  }, []);
+
   return (
     <Container>
       <ModeButton text="Export" onClick={onExportClick} />
@@ -45,6 +50,7 @@ const Hotbar = () => {
       <ModeButton text="Rectangle" onClick={onRectangleClick} />
       <ModeButton text="Circle" onClick={onCircleClick} />
       <ModeButton text="Arrow" onClick={onArrowClick} />
+      <ModeButton text="Text" onClick={onTextClick} />
     </Container>
   );
 };

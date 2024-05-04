@@ -24,8 +24,12 @@ const DynamicCanvas = () => {
     setContext(canvas.getContext("2d"));
   }, []);
 
-  const { onMouseDown, onMouseMove, onMouseUp } =
-    useEventListeners(currentShapeType);
+  const {
+    onMouseDown = undefined,
+    onMouseMove = undefined,
+    onKeyDown = undefined,
+    onMouseUp = undefined,
+  } = useEventListeners(currentShapeType);
 
   if (mode !== MODES.DRAW) {
     return null;
@@ -33,17 +37,44 @@ const DynamicCanvas = () => {
 
   return (
     <Canvas
-      onMouseDown={(event) => onMouseDown(event, canvas, currentShape)}
+      onMouseDown={(event) => {
+        if (!onMouseDown) return;
+
+        onMouseDown(event, canvas, context, currentShape, clearCanvas);
+      }}
       onMouseMove={(event) => {
+        if (!onMouseMove || !currentShape.current) return;
+
         if (currentShape.current && currentShape.current.points) {
           onMouseMove(event, canvas, context, currentShape, clearCanvas);
         }
       }}
       onMouseUp={(event) => {
+        if (!onMouseUp || !currentShape.current) return;
+
         onMouseUp(event, canvas, currentShape);
         addShape(currentShape.current);
         currentShape.current = undefined;
         clearCanvas();
+      }}
+      onKeyDown={(event) => {
+        if (!onKeyDown || !currentShape.current) return;
+
+        if (
+          event.key === "Shift" ||
+          event.key === "Alt" ||
+          event.key === "Meta" ||
+          event.key === "Control"
+        ) {
+          return;
+        }
+
+        if (event.key === "Escape") {
+          addShape(currentShape.current);
+          clearCanvas();
+        }
+
+        onKeyDown(event, canvas, context, currentShape, clearCanvas);
       }}
       ref={refCallback}
     />
