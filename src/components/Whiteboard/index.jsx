@@ -1,5 +1,5 @@
-import DynamicCanvas from "../canvases/DynamicCanvas/index.jsx";
-import StaticCanvas from "../canvases/StaticCanvas/index.jsx";
+import DynamicCanvas from "../Canvases/DynamicCanvas/index.jsx";
+import StaticCanvas from "../Canvases/StaticCanvas/index.jsx";
 import Hotbar from "../Hotbar/index.jsx";
 
 const Whiteboard = () => {

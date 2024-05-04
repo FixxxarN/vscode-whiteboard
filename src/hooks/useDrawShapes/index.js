@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect } from "react";
-import useCanvasManagement from "../../components/canvases/useCanvasManagement";
+import useCanvasManagement from "../../components/Canvases/useCanvasManagement";
 import { drawBackground } from "./utils";
 import { ShapesContext } from "../../components/ShapesContextProvider";
 

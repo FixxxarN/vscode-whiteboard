@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import useCanvasManagement from "../../components/canvases/useCanvasManagement";
+import useCanvasManagement from "../../components/Canvases/useCanvasManagement";
 import { StateContext } from "../../components/StateContextProvider";
 import { CLEAR_CANVAS, EXPORT_CANVAS } from "../../common/events";
 import PubSub from "pubsub-js";
