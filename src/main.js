@@ -13,7 +13,7 @@ import ShapesContextProvider from "./components/ShapesContextProvider/index.jsx"
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <StateContextProvider>
+    <StateContextProvider vscode={vscode}>
       <ShapesContextProvider vscode={vscode}>
         <Whiteboard />
       </ShapesContextProvider>

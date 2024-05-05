@@ -76,7 +76,7 @@ export const resolveArrowEventListeners = () => {
   return { onMouseDown, onMouseMove, onMouseUp }
 }
 
-export const resolveTextEventListeners = () => {
+export const resolveTextEventListeners = (textSize, textColor) => {
   const onMouseDown = (event, canvas, context, currentShape, clearCanvas) => {
     if (currentShape.current) return;
 
@@ -84,7 +84,7 @@ export const resolveTextEventListeners = () => {
 
     const initialPoint = { x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop };
 
-    currentShape.current = new Text(initialPoint, '20px Arial', '#000');
+    currentShape.current = new Text(initialPoint, `${textSize}px Arial`, textColor);
     currentShape.current.indicateTyping(context, clearCanvas);
   }
 

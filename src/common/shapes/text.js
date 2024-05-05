@@ -46,9 +46,14 @@ class Text {
     context.fillStyle = this.fillStyle;
 
     this.interval = setInterval(() => {
+      context.font = this.font;
+      context.fillStyle = this.fillStyle;
+
       if (this.indicate) {
         clearCanvas();
-        context.fillText(this.text + '|', this.point.x, this.point.y);
+        context.fillText(this.text, this.point.x, this.point.y);
+        context.fillStyle = '#000';
+        context.fillText('|', this.point.x + context.measureText(this.text).width, this.point.y);
         this.indicate = false;
       }
       else {

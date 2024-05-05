@@ -1,7 +1,11 @@
+import { useContext } from "react";
 import { SHAPE_TYPES } from "../../components/StateContextProvider/constants";
 import { resolveArrowEventListeners, resolveCircleEventListeners, resolvePencilEventListeners, resolveRectangleEventListeners, resolveTextEventListeners } from "./utils";
+import { StateContext } from "../../components/StateContextProvider";
 
 const useEventListeners = (currentShapeType) => {
+  const { textSize, textColor } = useContext(StateContext);
+
   switch (currentShapeType) {
     case SHAPE_TYPES.PENCIL: {
       return resolvePencilEventListeners();
@@ -16,7 +20,7 @@ const useEventListeners = (currentShapeType) => {
       return resolveArrowEventListeners();
     }
     case SHAPE_TYPES.TEXT: {
-      return resolveTextEventListeners();
+      return resolveTextEventListeners(textSize, textColor);
     }
     default: {
       return {}
