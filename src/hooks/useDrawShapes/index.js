@@ -7,7 +7,7 @@ const useDrawShapes = (canvas, context) => {
   const { clearCanvas } = useCanvasManagement(canvas, context);
   const { shapes } = useContext(ShapesContext);
 
-  const redrawCanvas = useCallback((shapes, canvas, context) => {
+  const redrawCanvas = useCallback((canvas, context) => {
     clearCanvas();
     drawBackground(canvas, context);
 
@@ -15,14 +15,14 @@ const useDrawShapes = (canvas, context) => {
       context.beginPath();
       shape.draw(context);
     });
-  }, [clearCanvas, drawBackground]);
+  }, [shapes, clearCanvas, drawBackground]);
 
   useEffect(() => {
-    if (canvas && context && shapes.length > 0) {
-      redrawCanvas(shapes, canvas, context);
+    if (canvas && context) {
+      redrawCanvas(canvas, context);
 
       window.addEventListener('resize', () => {
-        redrawCanvas(shapes, canvas, context);
+        redrawCanvas(canvas, context);
       });
     }
   }, [shapes, canvas, context]);

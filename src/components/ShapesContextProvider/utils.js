@@ -20,7 +20,8 @@ export const reCreateShapes = (shapes) => {
       return new Arrow(shape.points, shape.strokeWidth, shape.strokeColor);
     }
     if (shape.type === SHAPE_TYPES.TEXT) {
-      const text = new Text(shape.point, shape.font, shape.fillStyle).setValues(shape);
+      const text = new Text(shape.point, shape.font, shape.fillStyle);
+      text.setValues(shape)
       return text;
     }
   });

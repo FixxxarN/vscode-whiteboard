@@ -12,7 +12,7 @@ const DynamicCanvas = () => {
   const [context, setContext] = useState(undefined);
 
   const { mode, currentShapeType } = useContext(StateContext);
-  const { addShape } = useContext(ShapesContext);
+  const { addShape, clearHistoricalShapes } = useContext(ShapesContext);
 
   const currentShape = useRef(undefined);
 
@@ -54,6 +54,7 @@ const DynamicCanvas = () => {
 
         onMouseUp(event, canvas, currentShape);
         addShape(currentShape.current);
+        clearHistoricalShapes();
         currentShape.current = undefined;
         clearCanvas();
       }}
@@ -71,6 +72,7 @@ const DynamicCanvas = () => {
 
         if (event.key === "Escape") {
           addShape(currentShape.current);
+          clearHistoricalShapes();
           clearCanvas();
         }
 

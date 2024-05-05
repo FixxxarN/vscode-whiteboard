@@ -4,11 +4,12 @@ import { reCreateShapes } from "./utils";
 export const ShapesContext = createContext({
   shapes: undefined,
   historicalShapes: undefined,
-  addShape: (shape) => {},
-  popShape: () => {},
-  addHistoricalShape: (historicalShape) => {},
-  popHistoricalShape: () => {},
+  addShape: (shape) => shape,
+  popShape: () => undefined,
+  addHistoricalShape: (historicalShape) => historicalShape,
+  popHistoricalShape: () => undefined,
   clearShapes: () => {},
+  clearHistoricalShapes: () => {},
 });
 
 const ShapesContextProvider = ({ vscode, children }) => {
@@ -16,7 +17,7 @@ const ShapesContextProvider = ({ vscode, children }) => {
   const historicalShapesFromState = vscode.getState()?.historicalShapes || [];
 
   const [shapes, setShapes] = useState([...reCreateShapes(shapesFromState)]);
-  const [historicalShapes, setHistory] = useState([
+  const [historicalShapes, setHistoricalShapes] = useState([
     ...reCreateShapes(historicalShapesFromState),
   ]);
 
@@ -51,7 +52,7 @@ const ShapesContextProvider = ({ vscode, children }) => {
       const prevState = vscode.getState();
       const newHistoricalShapes = [...historicalShapes, historicalShape];
 
-      setHistory(newHistoricalShapes);
+      setHistoricalShapes(newHistoricalShapes);
 
       vscode.setState({ ...prevState, historicalShapes: newHistoricalShapes });
       return historicalShape;
@@ -65,12 +66,20 @@ const ShapesContextProvider = ({ vscode, children }) => {
 
     const poppedHistoricalShape = historicalShapesArray.pop();
 
-    setHistory(historicalShapesArray);
+    setHistoricalShapes(historicalShapesArray);
 
     vscode.setState({ ...prevState, historicalShapes: historicalShapesArray });
 
     return poppedHistoricalShape;
   }, [historicalShapes, vscode]);
+
+  const clearHistoricalShapes = useCallback(() => {
+    const prevState = vscode.getState();
+
+    setHistoricalShapes([]);
+
+    vscode.setState({ ...prevState, historicalShapes: [] });
+  }, [vscode]);
 
   return (
     <ShapesContext.Provider
@@ -82,6 +91,7 @@ const ShapesContextProvider = ({ vscode, children }) => {
         addHistoricalShape,
         popHistoricalShape,
         clearShapes: () => setShapes([]),
+        clearHistoricalShapes,
       }}
     >
       {children}
