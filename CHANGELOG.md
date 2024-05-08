@@ -1,5 +1,13 @@
 # Change Log
 
+## [2.0.0] - 2024-05-08
+
+### Added
+
+- Entire extension has been re-written to use React.js.
+- New shape text
+- Options for all shapes
+
 ## [1.6.0] - 2024-04-22
 
 ### Added
