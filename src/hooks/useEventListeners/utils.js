@@ -4,11 +4,11 @@ import Pencil from "../../common/shapes/pencil";
 import Rectangle from "../../common/shapes/rectangle";
 import Text from "../../common/shapes/text";
 
-export const resolvePencilEventListeners = () => {
+export const resolvePencilEventListeners = (strokeWidth, strokeColor) => {
   const onMouseDown = (event, canvas, context, currentShape, clearCanvas) => {
     const initialPoint = { x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop };
 
-    currentShape.current = new Pencil([initialPoint], 1, '#000');
+    currentShape.current = new Pencil([initialPoint], strokeWidth, strokeColor);
   }
 
   const onMouseMove = (event, canvas, context, currentShape) => {
@@ -22,11 +22,11 @@ export const resolvePencilEventListeners = () => {
   return { onMouseDown, onMouseMove, onMouseUp }
 }
 
-export const resolveRectangleEventListeners = () => {
+export const resolveRectangleEventListeners = (strokeWidth, strokeColor) => {
   const onMouseDown = (event, canvas, context, currentShape, clearCanvas) => {
     const initialPoint = { x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop };
 
-    currentShape.current = new Rectangle([initialPoint], 1, '#000');
+    currentShape.current = new Rectangle([initialPoint], strokeWidth, strokeColor);
   }
 
   const onMouseMove = (event, canvas, context, currentShape, clearCanvas) => {
@@ -40,11 +40,11 @@ export const resolveRectangleEventListeners = () => {
   return { onMouseDown, onMouseMove, onMouseUp }
 }
 
-export const resolveCircleEventListeners = () => {
+export const resolveCircleEventListeners = (strokeWidth, strokeColor) => {
   const onMouseDown = (event, canvas, context, currentShape, clearCanvas) => {
     const initialPoint = { x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop };
 
-    currentShape.current = new Circle([initialPoint], 1, '#000');
+    currentShape.current = new Circle([initialPoint], strokeWidth, strokeColor);
   }
 
   const onMouseMove = (event, canvas, context, currentShape, clearCanvas) => {
@@ -58,11 +58,11 @@ export const resolveCircleEventListeners = () => {
   return { onMouseDown, onMouseMove, onMouseUp }
 }
 
-export const resolveArrowEventListeners = () => {
+export const resolveArrowEventListeners = (strokeWidth, strokeColor) => {
   const onMouseDown = (event, canvas, context, currentShape, clearCanvas) => {
     const initialPoint = { x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop };
 
-    currentShape.current = new Arrow([initialPoint], 1, '#000');
+    currentShape.current = new Arrow([initialPoint], strokeWidth, strokeColor);
   }
 
   const onMouseMove = (event, canvas, context, currentShape, clearCanvas) => {

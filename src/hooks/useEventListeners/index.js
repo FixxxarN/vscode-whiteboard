@@ -4,20 +4,20 @@ import { resolveArrowEventListeners, resolveCircleEventListeners, resolvePencilE
 import { StateContext } from "../../components/StateContextProvider";
 
 const useEventListeners = (currentShapeType) => {
-  const { textSize, textColor } = useContext(StateContext);
+  const { textSize, textColor, strokeWidth, strokeColor } = useContext(StateContext);
 
   switch (currentShapeType) {
     case SHAPE_TYPES.PENCIL: {
-      return resolvePencilEventListeners();
+      return resolvePencilEventListeners(strokeWidth, strokeColor);
     }
     case SHAPE_TYPES.RECTANGLE: {
-      return resolveRectangleEventListeners();
+      return resolveRectangleEventListeners(strokeWidth, strokeColor);
     }
     case SHAPE_TYPES.CIRCLE: {
-      return resolveCircleEventListeners();
+      return resolveCircleEventListeners(strokeWidth, strokeColor);
     }
     case SHAPE_TYPES.ARROW: {
-      return resolveArrowEventListeners();
+      return resolveArrowEventListeners(strokeWidth, strokeColor);
     }
     case SHAPE_TYPES.TEXT: {
       return resolveTextEventListeners(textSize, textColor);

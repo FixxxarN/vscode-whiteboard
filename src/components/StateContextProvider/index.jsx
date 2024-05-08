@@ -10,6 +10,10 @@ export const StateContext = createContext({
   updateTextSize: (textSize) => {},
   textColor: undefined,
   updateTextColor: (textColor) => {},
+  strokeWidth: undefined,
+  updateStrokeWidth: (strokeWidth) => {},
+  strokeColor: undefined,
+  updateStrokeColor: (strokeColor) => {},
 });
 
 const StateContextProvider = ({ vscode, children }) => {
@@ -17,6 +21,8 @@ const StateContextProvider = ({ vscode, children }) => {
   const [currentShapeType, setCurrentShapeType] = useState(MODES.INTERACT);
   const [textSize, setTextSize] = useState(6);
   const [textColor, setTextColor] = useState("black");
+  const [strokeWidth, setStrokeWidth] = useState(1);
+  const [strokeColor, setStrokeColor] = useState("black");
 
   const updateTextSize = useCallback(
     (textSize) => {
@@ -36,6 +42,24 @@ const StateContextProvider = ({ vscode, children }) => {
     [vscode]
   );
 
+  const updateStrokeWidth = useCallback(
+    (strokeWidth) => {
+      const prevState = vscode.getState();
+      setStrokeWidth(strokeWidth);
+      vscode.setState({ ...prevState, strokeWidth: strokeWidth });
+    },
+    [vscode]
+  );
+
+  const updateStrokeColor = useCallback(
+    (strokeColor) => {
+      const prevState = vscode.getState();
+      setStrokeColor(strokeColor);
+      vscode.setState({ ...prevState, strokeColor: strokeColor });
+    },
+    [vscode]
+  );
+
   return (
     <StateContext.Provider
       value={{
@@ -45,8 +69,12 @@ const StateContextProvider = ({ vscode, children }) => {
         setCurrentShapeType,
         textSize,
         textColor,
+        strokeWidth,
+        strokeColor,
         updateTextSize,
         updateTextColor,
+        updateStrokeWidth,
+        updateStrokeColor,
       }}
     >
       {children}
