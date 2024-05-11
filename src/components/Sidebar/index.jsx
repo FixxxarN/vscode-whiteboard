@@ -6,7 +6,9 @@ import TextOptions from "./TextOptions";
 import DrawingShapeOptions from "./DrawingShapeOptions";
 
 const Sidebar = () => {
-  const { mode, currentShapeType } = useContext(StateContext);
+  const {
+    state: { mode, currentShapeType },
+  } = useContext(StateContext);
 
   const isCurrentShapeDrawingShape =
     currentShapeType === SHAPE_TYPES.PENCIL ||

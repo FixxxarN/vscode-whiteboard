@@ -4,7 +4,7 @@ import { resolveArrowEventListeners, resolveCircleEventListeners, resolvePencilE
 import { StateContext } from "../../components/StateContextProvider";
 
 const useEventListeners = (currentShapeType) => {
-  const { textSize, textColor, strokeWidth, strokeColor } = useContext(StateContext);
+  const { state: { textSize, textColor, strokeWidth, strokeColor } } = useContext(StateContext);
 
   switch (currentShapeType) {
     case SHAPE_TYPES.PENCIL: {

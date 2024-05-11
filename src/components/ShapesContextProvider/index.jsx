@@ -1,101 +1,64 @@
-import { createContext, useCallback, useState } from "react";
-import { reCreateShapes } from "./utils";
+import { createContext, useCallback, useMemo, useReducer } from "react";
+import reducer, { action, actions, initialState } from "./reducer";
 
-export const ShapesContext = createContext({
-  shapes: undefined,
-  historicalShapes: undefined,
-  addShape: (shape) => shape,
-  popShape: () => undefined,
-  addHistoricalShape: (historicalShape) => historicalShape,
-  popHistoricalShape: () => undefined,
-  clearShapes: () => {},
-  clearHistoricalShapes: () => {},
-});
+export const ShapesContext = createContext({});
 
-const ShapesContextProvider = ({ vscode, children }) => {
-  const shapesFromState = vscode.getState()?.shapes || [];
-  const historicalShapesFromState = vscode.getState()?.historicalShapes || [];
+const {
+  ADD_SHAPE,
+  POP_SHAPE,
+  ADD_HISTORICAL_SHAPE,
+  POP_HISTORICAL_SHAPE,
+  CLEAR_SHAPES,
+  CLEAR_HISTORICAL_SHAPES,
+} = actions;
 
-  const [shapes, setShapes] = useState([...reCreateShapes(shapesFromState)]);
-  const [historicalShapes, setHistoricalShapes] = useState([
-    ...reCreateShapes(historicalShapesFromState),
-  ]);
+const ShapesContextProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
+  const dispatchAction = useCallback(
+    (type, data) => dispatch(action(type, data)),
+    [dispatch]
+  );
   const addShape = useCallback(
-    (shape) => {
-      const prevState = vscode.getState();
-      const newShapes = [...shapes, shape];
-
-      setShapes(newShapes);
-
-      vscode.setState({ ...prevState, shapes: newShapes });
-      return shape;
-    },
-    [shapes, vscode]
+    (shape) => dispatchAction(ADD_SHAPE, shape),
+    [dispatchAction]
   );
-
-  const popShape = useCallback(() => {
-    const prevState = vscode.getState();
-    const shapesArray = [...shapes];
-
-    const poppedShape = shapesArray.pop();
-
-    setShapes(shapesArray);
-
-    vscode.setState({ ...prevState, shapes: shapesArray });
-
-    return poppedShape;
-  }, [shapes, vscode]);
-
+  const popShape = useCallback(
+    () => dispatchAction(POP_SHAPE),
+    [dispatchAction]
+  );
   const addHistoricalShape = useCallback(
-    (historicalShape) => {
-      const prevState = vscode.getState();
-      const newHistoricalShapes = [...historicalShapes, historicalShape];
-
-      setHistoricalShapes(newHistoricalShapes);
-
-      vscode.setState({ ...prevState, historicalShapes: newHistoricalShapes });
-      return historicalShape;
-    },
-    [historicalShapes, vscode]
+    (historicalShape) => dispatchAction(ADD_HISTORICAL_SHAPE, historicalShape),
+    [dispatchAction]
+  );
+  const popHistoricalShape = useCallback(
+    () => dispatchAction(POP_HISTORICAL_SHAPE),
+    [dispatchAction]
+  );
+  const clearShapes = useCallback(
+    () => dispatchAction(CLEAR_SHAPES),
+    [dispatchAction]
+  );
+  const clearHistoricalShapes = useCallback(
+    () => dispatchAction(CLEAR_HISTORICAL_SHAPES),
+    [dispatchAction]
   );
 
-  const popHistoricalShape = useCallback(() => {
-    const prevState = vscode.getState();
-    const historicalShapesArray = [...historicalShapes];
-
-    const poppedHistoricalShape = historicalShapesArray.pop();
-
-    setHistoricalShapes(historicalShapesArray);
-
-    vscode.setState({ ...prevState, historicalShapes: historicalShapesArray });
-
-    return poppedHistoricalShape;
-  }, [historicalShapes, vscode]);
-
-  const clearHistoricalShapes = useCallback(() => {
-    const prevState = vscode.getState();
-
-    setHistoricalShapes([]);
-
-    vscode.setState({ ...prevState, historicalShapes: [] });
-  }, [vscode]);
+  const value = useMemo(
+    () => ({
+      state,
+      addShape,
+      popShape,
+      addHistoricalShape,
+      popHistoricalShape,
+      clearShapes,
+      clearHistoricalShapes,
+    }),
+    [state, dispatch]
+  );
 
   return (
-    <ShapesContext.Provider
-      value={{
-        shapes,
-        historicalShapes,
-        addShape,
-        popShape,
-        addHistoricalShape,
-        popHistoricalShape,
-        clearShapes: () => setShapes([]),
-        clearHistoricalShapes,
-      }}
-    >
-      {children}
-    </ShapesContext.Provider>
+    <ShapesContext.Provider value={value}>{children}</ShapesContext.Provider>
   );
 };
 

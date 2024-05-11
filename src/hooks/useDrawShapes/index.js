@@ -5,7 +5,7 @@ import { ShapesContext } from "../../components/ShapesContextProvider";
 
 const useDrawShapes = (canvas, context) => {
   const { clearCanvas } = useCanvasManagement(canvas, context);
-  const { shapes } = useContext(ShapesContext);
+  const { state: { shapes } } = useContext(ShapesContext);
 
   const redrawCanvas = useCallback((canvas, context) => {
     clearCanvas();

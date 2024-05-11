@@ -10,7 +10,7 @@ function activate(context) {
 			currentPanel.reveal(columnToShowIn);
 		}
 		else {
-			currentPanel = vscode.window.createWebviewPanel('vscode-whiteboard', 'Whiteboard', columnToShowIn || vscode.ViewColumn.One, { enableScripts: true, localResourceRoots: [vscode.Uri.joinPath(context.extensionUri, 'dist')] });
+			currentPanel = vscode.window.createWebviewPanel('vscode-whiteboard', 'Whiteboard', columnToShowIn || vscode.ViewColumn.One, { enableScripts: true, retainContextWhenHidden: true, localResourceRoots: [vscode.Uri.joinPath(context.extensionUri, 'dist')] });
 		}
 
 		currentPanel.webview.html = getWebviewContent(context.extensionUri, currentPanel);

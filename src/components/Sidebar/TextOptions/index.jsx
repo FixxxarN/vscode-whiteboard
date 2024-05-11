@@ -2,17 +2,17 @@ import { useContext } from "react";
 import { StateContext } from "../../StateContextProvider";
 
 const TextOptions = () => {
-  const { textSize, textColor, updateTextSize, updateTextColor } =
-    useContext(StateContext);
+  const {
+    state: { textSize, textColor },
+    setTextSize,
+    setTextColor,
+  } = useContext(StateContext);
 
   return (
     <>
       <div style={{ display: "flex", flexDirection: "column", color: "#000" }}>
         <span>Font size:</span>
-        <select
-          onChange={(e) => updateTextSize(e.target.value)}
-          value={textSize}
-        >
+        <select onChange={(e) => setTextSize(e.target.value)} value={textSize}>
           <option value="6">6px</option>
           <option value="8">8px</option>
           <option value="10">10px</option>
@@ -28,7 +28,7 @@ const TextOptions = () => {
       <div style={{ display: "flex", flexDirection: "column", color: "#000" }}>
         <span>Text color:</span>
         <select
-          onChange={(e) => updateTextColor(e.target.value)}
+          onChange={(e) => setTextColor(e.target.value)}
           value={textColor}
         >
           <option value="black">Black</option>

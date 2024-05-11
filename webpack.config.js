@@ -17,6 +17,9 @@ const config = {
     vscode: 'commonjs vscode'
   },
   resolve: {
+    alias: {
+      '~': path.resolve(`${__dirname}/src`)
+    },
     mainFields: ['browser', 'module', 'main'],
     extensions: ['.js', '.jsx'],
   },

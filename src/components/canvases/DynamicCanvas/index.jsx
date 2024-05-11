@@ -11,7 +11,9 @@ const DynamicCanvas = () => {
   const [canvas, setCanvas] = useState(undefined);
   const [context, setContext] = useState(undefined);
 
-  const { mode, currentShapeType } = useContext(StateContext);
+  const {
+    state: { mode, currentShapeType },
+  } = useContext(StateContext);
   const { addShape, clearHistoricalShapes } = useContext(ShapesContext);
 
   const currentShape = useRef(undefined);

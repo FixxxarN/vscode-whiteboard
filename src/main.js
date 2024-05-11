@@ -1,8 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
-// @ts-nocheck
-const vscode = acquireVsCodeApi();
-
 import React from "react";
 import ReactDOM from "react-dom/client";
 
@@ -13,8 +8,8 @@ import ShapesContextProvider from "./components/ShapesContextProvider/index.jsx"
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <StateContextProvider vscode={vscode}>
-      <ShapesContextProvider vscode={vscode}>
+    <StateContextProvider>
+      <ShapesContextProvider>
         <Whiteboard />
       </ShapesContextProvider>
     </StateContextProvider>

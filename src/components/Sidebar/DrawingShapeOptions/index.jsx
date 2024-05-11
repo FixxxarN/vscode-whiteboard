@@ -2,15 +2,18 @@ import { useContext } from "react";
 import { StateContext } from "../../StateContextProvider";
 
 const DrawingShapeOptions = () => {
-  const { strokeWidth, strokeColor, updateStrokeWidth, updateStrokeColor } =
-    useContext(StateContext);
+  const {
+    state: { strokeWidth, strokeColor },
+    setStrokeWidth,
+    setStrokeColor,
+  } = useContext(StateContext);
 
   return (
     <>
       <div style={{ display: "flex", flexDirection: "column", color: "#000" }}>
         <span>Stroke width:</span>
         <select
-          onChange={(e) => updateStrokeWidth(e.target.value)}
+          onChange={(e) => setStrokeWidth(e.target.value)}
           value={strokeWidth}
         >
           <option value={1}>1px</option>
@@ -28,7 +31,7 @@ const DrawingShapeOptions = () => {
       <div style={{ display: "flex", flexDirection: "column", color: "#000" }}>
         <span>Stroke color:</span>
         <select
-          onChange={(e) => updateStrokeColor(e.target.value)}
+          onChange={(e) => setStrokeColor(e.target.value)}
           value={strokeColor}
         >
           <option value="black">Black</option>

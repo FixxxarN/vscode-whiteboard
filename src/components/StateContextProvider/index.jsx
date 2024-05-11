@@ -1,84 +1,64 @@
-import { createContext, useCallback, useState } from "react";
-import { MODES } from "./constants";
+import { createContext, useCallback, useMemo, useReducer } from "react";
+import reducer, { action, actions, initialState } from "./reducer";
 
-export const StateContext = createContext({
-  mode: MODES.INTERACT,
-  currentShapeType: undefined,
-  setMode: (mode) => {},
-  setCurrentShapeType: (shapeType) => {},
-  textSize: undefined,
-  updateTextSize: (textSize) => {},
-  textColor: undefined,
-  updateTextColor: (textColor) => {},
-  strokeWidth: undefined,
-  updateStrokeWidth: (strokeWidth) => {},
-  strokeColor: undefined,
-  updateStrokeColor: (strokeColor) => {},
-});
+export const StateContext = createContext({});
 
-const StateContextProvider = ({ vscode, children }) => {
-  const [mode, setMode] = useState(MODES.INTERACT);
-  const [currentShapeType, setCurrentShapeType] = useState(MODES.INTERACT);
-  const [textSize, setTextSize] = useState(6);
-  const [textColor, setTextColor] = useState("black");
-  const [strokeWidth, setStrokeWidth] = useState(1);
-  const [strokeColor, setStrokeColor] = useState("black");
+const {
+  SET_MODE,
+  SET_CURRENT_SHAPE_TYPE,
+  SET_TEXT_SIZE,
+  SET_TEXT_COLOR,
+  SET_STROKE_WIDTH,
+  SET_STROKE_COLOR,
+} = actions;
 
-  const updateTextSize = useCallback(
-    (textSize) => {
-      const prevState = vscode.getState();
-      setTextSize(textSize);
-      vscode.setState({ ...prevState, textSize: textSize });
-    },
-    [vscode]
+const StateContextProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const dispatchAction = useCallback(
+    (type, data) => dispatch(action(type, data)),
+    [dispatch]
+  );
+  const setMode = useCallback(
+    (mode) => dispatchAction(SET_MODE, mode),
+    [dispatchAction]
+  );
+  const setCurrentShapeType = useCallback(
+    (shapeType) => dispatchAction(SET_CURRENT_SHAPE_TYPE, shapeType),
+    [dispatchAction]
+  );
+  const setTextSize = useCallback(
+    (textSize) => dispatchAction(SET_TEXT_SIZE, textSize),
+    [dispatchAction]
+  );
+  const setTextColor = useCallback(
+    (textColor) => dispatchAction(SET_TEXT_COLOR, textColor),
+    [dispatchAction]
+  );
+  const setStrokeWidth = useCallback(
+    (strokeWidth) => dispatchAction(SET_STROKE_WIDTH, strokeWidth),
+    [dispatchAction]
+  );
+  const setStrokeColor = useCallback(
+    (strokeColor) => dispatchAction(SET_STROKE_COLOR, strokeColor),
+    [dispatchAction]
   );
 
-  const updateTextColor = useCallback(
-    (textColor) => {
-      const prevState = vscode.getState();
-      setTextColor(textColor);
-      vscode.setState({ ...prevState, textColor: textColor });
-    },
-    [vscode]
-  );
-
-  const updateStrokeWidth = useCallback(
-    (strokeWidth) => {
-      const prevState = vscode.getState();
-      setStrokeWidth(strokeWidth);
-      vscode.setState({ ...prevState, strokeWidth: strokeWidth });
-    },
-    [vscode]
-  );
-
-  const updateStrokeColor = useCallback(
-    (strokeColor) => {
-      const prevState = vscode.getState();
-      setStrokeColor(strokeColor);
-      vscode.setState({ ...prevState, strokeColor: strokeColor });
-    },
-    [vscode]
+  const value = useMemo(
+    () => ({
+      state,
+      setMode,
+      setCurrentShapeType,
+      setTextSize,
+      setTextColor,
+      setStrokeWidth,
+      setStrokeColor,
+    }),
+    [state, dispatch]
   );
 
   return (
-    <StateContext.Provider
-      value={{
-        mode,
-        currentShapeType,
-        setMode,
-        setCurrentShapeType,
-        textSize,
-        textColor,
-        strokeWidth,
-        strokeColor,
-        updateTextSize,
-        updateTextColor,
-        updateStrokeWidth,
-        updateStrokeColor,
-      }}
-    >
-      {children}
-    </StateContext.Provider>
+    <StateContext.Provider value={value}>{children}</StateContext.Provider>
   );
 };
 
