@@ -25,7 +25,7 @@ class Circle {
     context.stroke();
   }
 
-  drawOngoing(event, canvas, context, clearCanvas) {
+  onMouseMove(event, canvas, context, clearCanvas) {
     clearCanvas();
 
     context.strokeStyle = this.strokeColor;
@@ -40,6 +40,13 @@ class Circle {
 
     context.arc(startingX + ((newPoint.x - startingX) / 2), startingY + ((newPoint.y - startingY) / 2), Math.abs((newPoint.x - startingX) / 2), 0, 2 * Math.PI);
     context.stroke();
+  }
+
+  onMouseUp(event, canvas, context, currentShape, addShape, clearCanvas) {
+    currentShape.current.points.push({ x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop });
+    addShape(currentShape.current);
+    clearCanvas();
+    currentShape.current = undefined;
   }
 }
 

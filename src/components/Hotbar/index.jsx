@@ -17,6 +17,11 @@ const Hotbar = () => {
     PubSub.publish(CLEAR_CANVAS);
   }, []);
 
+  const onInteractClick = useCallback(() => {
+    setMode(MODES.INTERACT);
+    setCurrentShapeType(undefined);
+  }, []);
+
   const onPencilClick = useCallback(() => {
     setMode(MODES.DRAW);
     setCurrentShapeType(SHAPE_TYPES.PENCIL);
@@ -46,6 +51,7 @@ const Hotbar = () => {
     <Container>
       <ModeButton text="Export" onClick={onExportClick} />
       <ModeButton text="Clear" onClick={onClearClick} />
+      <ModeButton text="Interact" onClick={onInteractClick} />
       <ModeButton text="Pencil" onClick={onPencilClick} />
       <ModeButton text="Rectangle" onClick={onRectangleClick} />
       <ModeButton text="Circle" onClick={onCircleClick} />

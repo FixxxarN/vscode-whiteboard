@@ -21,7 +21,16 @@ class Text {
     context.fillText(this.text, this.point.x, this.point.y);
   }
 
-  drawOngoing(event, canvas, context, clearCanvas) {
+  onKeyDown(event, canvas, context, currentShape, addShape, clearCanvas) {
+    if (event.key === "Escape") {
+      canvas.tabIndex = 0;
+
+      addShape(currentShape.current);
+      currentShape.current.removeTypingIndicator();
+      currentShape.current = undefined;
+      return;
+    }
+
     clearCanvas();
 
     this.indicate = false;
@@ -64,8 +73,10 @@ class Text {
     }, 400)
   }
 
-  removeTypingIndicator() {
+  removeTypingIndicator(context, clearCanvas) {
     clearInterval(this.interval)
+    clearCanvas();
+    context.fillText(this.text, this.point.x, this.point.y);
   }
 
   setValues(shape) {

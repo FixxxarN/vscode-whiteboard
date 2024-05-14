@@ -31,7 +31,7 @@ class Arrow {
     context.stroke();
   }
 
-  drawOngoing(event, canvas, context, clearCanvas) {
+  onMouseMove(event, canvas, context, clearCanvas) {
     clearCanvas();
 
     context.strokeStyle = this.strokeColor;
@@ -56,6 +56,13 @@ class Arrow {
     context.moveTo(endingX, endingY);
     context.lineTo(arrowPoint2.x, arrowPoint2.y);
     context.stroke();
+  }
+
+  onMouseUp(event, canvas, context, currentShape, addShape, clearCanvas) {
+    currentShape.current.points.push({ x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop });
+    addShape(currentShape.current);
+    clearCanvas();
+    currentShape.current = undefined;
   }
 
   calculateArrowPoints(startingX, startingY, endingX, endingY) {

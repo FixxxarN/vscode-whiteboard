@@ -28,7 +28,7 @@ class Pencil {
     }
   }
 
-  drawOngoing(event, canvas, context) {
+  onMouseMove(event, canvas, context) {
     const pointsOnlyIncludeInitialValue = this.points.length === 1;
 
     if (pointsOnlyIncludeInitialValue) {
@@ -60,6 +60,13 @@ class Pencil {
     context.stroke();
 
     this.points.push({ x: endingX, y: endingY });
+  }
+
+  onMouseUp(event, canvas, context, currentShape, addShape, clearCanvas) {
+    currentShape.current.points.push({ x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop });
+    addShape(currentShape.current);
+    clearCanvas();
+    currentShape.current = undefined;
   }
 }
 
