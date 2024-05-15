@@ -2,11 +2,8 @@ import { useContext } from "react";
 import { StateContext } from "../../StateContextProvider";
 
 const TextOptions = () => {
-  const {
-    state: { textSize, textColor },
-    setTextSize,
-    setTextColor,
-  } = useContext(StateContext);
+  const { state, setTextSize, setTextColor } = useContext(StateContext);
+  const { textSize, textColor } = state;
 
   return (
     <>

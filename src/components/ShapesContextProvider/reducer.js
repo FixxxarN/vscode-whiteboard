@@ -30,10 +30,13 @@ const reducer = (state, action) => {
     case actions.REMOVE_SHAPE_BY_ID: {
       const idToBeRemoved = action.data;
       const shapesArray = [...state.shapes];
+
       const index = shapesArray.findIndex((shape) => shape.id === idToBeRemoved);
+
       if (index !== -1) {
         shapesArray.splice(index, 1);
       }
+
       return { ...state, shapes: shapesArray }
     }
     case actions.ADD_HISTORICAL_SHAPE: {

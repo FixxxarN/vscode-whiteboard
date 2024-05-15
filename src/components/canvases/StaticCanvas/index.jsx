@@ -1,10 +1,6 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Canvas } from "./styles.js";
-import { StateContext } from "../../StateContextProvider/index.jsx";
 import useResizeAndScale from "../useResizeAndScale.js";
-import PubSub from "pubsub-js";
-import { CLEAR_CANVAS } from "../../../common/events.js";
-import useCanvasManagement from "../useCanvasManagement.js";
 import useDrawShapes from "../../../hooks/useDrawShapes/index.js";
 import useStaticCanvasEventHandlers from "../../../hooks/useStaticCanvasEventHandlers.js/index.js";
 import useUndoRedo from "../../../hooks/useUndoRedo/index.js";

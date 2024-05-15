@@ -2,11 +2,8 @@ import { useContext } from "react";
 import { StateContext } from "../../StateContextProvider";
 
 const DrawingShapeOptions = () => {
-  const {
-    state: { strokeWidth, strokeColor },
-    setStrokeWidth,
-    setStrokeColor,
-  } = useContext(StateContext);
+  const { state, setStrokeWidth, setStrokeColor } = useContext(StateContext);
+  const { strokeWidth, strokeColor } = state;
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { useCallback, useContext, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { Canvas } from "./styles.js";
 import useEventListeners from "../../../hooks/useEventListeners/index.js";
 import useResizeAndScale from "../useResizeAndScale.js";
