@@ -1,5 +1,12 @@
 # Change Log
 
+## [3.0.0] - 2024-05-15
+
+### Added
+
+- New design with Material-ui
+- Possibility to move drawn shapes
+
 ## [2.0.0] - 2024-05-08
 
 ### Added
