@@ -23,7 +23,6 @@ function activate(context) {
 
 function getWebviewContent(extensionUri, currentPanel) {
 	const mainUri = currentPanel.webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'dist', 'bundle.js'));
-	const stylesUri = currentPanel.webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'dist', 'styles.css'));
 
 	return `
 		<!DOCTYPE html>
@@ -32,9 +31,24 @@ function getWebviewContent(extensionUri, currentPanel) {
 				<meta charset="UTF-8">
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
 				<title>Visual Studio Code - Whiteboard</title>
-				<link href="${stylesUri}" rel="stylesheet">
 				<script>var exports = {};</script>
 				<script type="module" src="${mainUri}"></script>
+				<style>
+				body {
+					user-select: none;
+					display: flex;
+					padding: 0px;
+					margin: 0px;
+					height: 100vh;
+					width: 100vw;
+				}
+				
+				#root {
+					display: flex;
+					width: 100%;
+					height: 100%;
+				}				
+				</style>
 			</head>
 			<body>
 				<div id="root"></div>

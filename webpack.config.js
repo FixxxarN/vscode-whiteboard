@@ -34,18 +34,13 @@ const config = {
             presets: ['@babel/preset-env', ["@babel/preset-react", { "runtime": "automatic" }]],
           },
         },
-      },
-      {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
-      },
+      }
     ],
   },
   plugins: [
     new CopyPlugin({
       patterns: [
         { from: path.resolve(__dirname, 'src', 'extension.js'), to: path.resolve(__dirname, 'dist') },
-        { from: path.resolve(__dirname, 'src', 'styles.css'), to: path.resolve(__dirname, 'dist') },
       ],
     }),
   ],
