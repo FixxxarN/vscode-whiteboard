@@ -5,6 +5,14 @@ import { StateContext } from "../StateContextProvider/index.jsx";
 import { MODES, SHAPE_TYPES } from "../StateContextProvider/constants.js";
 import PubSub from "pubsub-js";
 import { CLEAR_CANVAS, EXPORT_CANVAS } from "../../common/events.js";
+import DownloadIcon from "@mui/icons-material/Download";
+import ClearIcon from "@mui/icons-material/Clear";
+import BrushIcon from "@mui/icons-material/Brush";
+import NavigationIcon from "@mui/icons-material/Navigation";
+import Crop54Icon from "@mui/icons-material/Crop54";
+import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import TextFieldsIcon from "@mui/icons-material/TextFields";
 
 const Hotbar = () => {
   const { setMode, setCurrentShapeType } = useContext(StateContext);
@@ -49,14 +57,14 @@ const Hotbar = () => {
 
   return (
     <Container>
-      <ModeButton text="Export" onClick={onExportClick} />
-      <ModeButton text="Clear" onClick={onClearClick} />
-      <ModeButton text="Interact" onClick={onInteractClick} />
-      <ModeButton text="Pencil" onClick={onPencilClick} />
-      <ModeButton text="Rectangle" onClick={onRectangleClick} />
-      <ModeButton text="Circle" onClick={onCircleClick} />
-      <ModeButton text="Arrow" onClick={onArrowClick} />
-      <ModeButton text="Text" onClick={onTextClick} />
+      <ModeButton icon={<DownloadIcon />} onClick={onExportClick} />
+      <ModeButton icon={<ClearIcon />} onClick={onClearClick} />
+      <ModeButton icon={<NavigationIcon />} onClick={onInteractClick} />
+      <ModeButton icon={<BrushIcon />} onClick={onPencilClick} />
+      <ModeButton icon={<Crop54Icon />} onClick={onRectangleClick} />
+      <ModeButton icon={<CircleOutlinedIcon />} onClick={onCircleClick} />
+      <ModeButton icon={<ArrowRightAltIcon />} onClick={onArrowClick} />
+      <ModeButton icon={<TextFieldsIcon />} onClick={onTextClick} />
     </Container>
   );
 };

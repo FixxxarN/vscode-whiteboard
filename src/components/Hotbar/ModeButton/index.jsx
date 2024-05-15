@@ -1,7 +1,7 @@
-import { Button } from "./styles.js";
+import IconButton from "@mui/material/IconButton";
 
-const ModeButton = ({ text, onClick }) => {
-  return <Button onClick={onClick}>{text}</Button>;
+const ModeButton = ({ icon, onClick }) => {
+  return <IconButton onClick={onClick}>{icon}</IconButton>;
 };
 
 export default ModeButton;
