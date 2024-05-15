@@ -5,8 +5,17 @@ import { StateContext } from "../../components/StateContextProvider";
 import { ShapesContext } from "../../components/ShapesContextProvider";
 import useCanvasManagement from "../../components/Canvases/useCanvasManagement";
 
-const useInteractEventHandlers = () => {
-  return getInteraceEventHandlers();
+const useInteractEventHandlers = (canvas, context) => {
+  const { clearCanvas } = useCanvasManagement(canvas, context);
+  const { state, addShape, removeShapeById } = useContext(ShapesContext);
+  const { shapes } = state;
+
+  const hoveredShape = useRef(undefined);
+  const hoveredShapePoints = useRef(undefined);
+  const mouseDownPosition = useRef(undefined);
+  const mouseDown = useRef(false);
+
+  return getInteraceEventHandlers({ canvas, context, shapes, hoveredShape, mouseDownPosition, hoveredShapePoints, mouseDown, removeShapeById, addShape, clearCanvas });
 }
 
 const useDrawEventHandlers = (canvas, context, state) => {
@@ -22,7 +31,7 @@ const useEventListeners = (canvas, context) => {
   const { state } = useContext(StateContext);
   const { mode } = state;
 
-  const interactEventHandlers = useInteractEventHandlers();
+  const interactEventHandlers = useInteractEventHandlers(canvas, context);
   const drawEventHandlers = useDrawEventHandlers(canvas, context, state);
 
 

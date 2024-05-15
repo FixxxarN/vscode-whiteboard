@@ -20,6 +20,7 @@ const DynamicCanvas = () => {
 
   return (
     <Canvas
+      id="dynamic-canvas"
       onMouseDown={(event) => {
         if (!eventListeners?.onMouseDown) return;
         eventListeners.onMouseDown(event);

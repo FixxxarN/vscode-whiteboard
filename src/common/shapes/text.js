@@ -1,8 +1,11 @@
 import { SHAPE_TYPES } from "../../components/StateContextProvider/constants";
+import { calculateBoundingBox } from "../utils";
 
 class Text {
   constructor(point, font, fillStyle) {
+    this.id = crypto.randomUUID();
     this.point = point;
+    this.points = [];
     this.font = font;
     this.fillStyle = fillStyle;
 
@@ -10,6 +13,7 @@ class Text {
     this.indicate = true
 
     this.type = SHAPE_TYPES.TEXT;
+    this.boundingBox = undefined;
   }
 
   draw(context) {
@@ -26,7 +30,7 @@ class Text {
       canvas.tabIndex = 0;
 
       addShape(currentShape.current);
-      currentShape.current.removeTypingIndicator();
+      currentShape.current.removeTypingIndicator(context, clearCanvas);
       currentShape.current = undefined;
       return;
     }
@@ -48,6 +52,14 @@ class Text {
     }
 
     context.fillText(this.text, this.point.x, this.point.y);
+  }
+
+  move(changedPoints, context, clearCanvas) {
+    clearCanvas();
+    const arrayOfXCoordinates = changedPoints.map((point) => point.x);
+    const arrayOfYCoordinates = changedPoints.map((point) => point.y);
+    this.point = { x: Math.min(...arrayOfXCoordinates), y: Math.min(...arrayOfYCoordinates) + Number(this.font.split("px")[0]) };
+    this.draw(context)
   }
 
   indicateTyping(context, clearCanvas) {
@@ -76,11 +88,17 @@ class Text {
   removeTypingIndicator(context, clearCanvas) {
     clearInterval(this.interval)
     clearCanvas();
-    context.fillText(this.text, this.point.x, this.point.y);
+    this.points = [{ x: this.point.x, y: this.point.y }, { x: this.point.x + context.measureText(this.text).width, y: this.point.y - this.font.split("px")[0] }]
+    this.updateBoundingBox(context);
   }
 
   setValues(shape) {
     this.text = shape.text;
+  }
+
+  updateBoundingBox(context) {
+    this.points = [{ x: this.point.x, y: this.point.y }, { x: this.point.x + context.measureText(this.text).width, y: this.point.y - this.font.split("px")[0] }]
+    this.boundingBox = calculateBoundingBox(this.points);
   }
 }
 

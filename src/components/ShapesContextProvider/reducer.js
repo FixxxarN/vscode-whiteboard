@@ -1,6 +1,7 @@
 export const actions = {
   ADD_SHAPE: 'ADD_SHAPE',
   POP_SHAPE: 'POP_SHAPE',
+  REMOVE_SHAPE_BY_ID: 'REMOVE_SHAPE_BY_ID',
   ADD_HISTORICAL_SHAPE: 'ADD_HISTORICAL_SHAPE',
   POP_HISTORICAL_SHAPE: 'POP_HISTORICAL_SHAPE',
   CLEAR_SHAPES: 'CLEAR_SHAPES',
@@ -24,6 +25,15 @@ const reducer = (state, action) => {
     case actions.POP_SHAPE: {
       const shapesArray = [...state.shapes];
       shapesArray.pop();
+      return { ...state, shapes: shapesArray }
+    }
+    case actions.REMOVE_SHAPE_BY_ID: {
+      const idToBeRemoved = action.data;
+      const shapesArray = [...state.shapes];
+      const index = shapesArray.findIndex((shape) => shape.id === idToBeRemoved);
+      if (index !== -1) {
+        shapesArray.splice(index, 1);
+      }
       return { ...state, shapes: shapesArray }
     }
     case actions.ADD_HISTORICAL_SHAPE: {

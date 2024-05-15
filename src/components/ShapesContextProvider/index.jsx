@@ -6,6 +6,7 @@ export const ShapesContext = createContext({});
 const {
   ADD_SHAPE,
   POP_SHAPE,
+  REMOVE_SHAPE_BY_ID,
   ADD_HISTORICAL_SHAPE,
   POP_HISTORICAL_SHAPE,
   CLEAR_SHAPES,
@@ -25,6 +26,10 @@ const ShapesContextProvider = ({ children }) => {
   );
   const popShape = useCallback(
     () => dispatchAction(POP_SHAPE),
+    [dispatchAction]
+  );
+  const removeShapeById = useCallback(
+    (id) => dispatchAction(REMOVE_SHAPE_BY_ID, id),
     [dispatchAction]
   );
   const addHistoricalShape = useCallback(
@@ -49,6 +54,7 @@ const ShapesContextProvider = ({ children }) => {
       state,
       addShape,
       popShape,
+      removeShapeById,
       addHistoricalShape,
       popHistoricalShape,
       clearShapes,
