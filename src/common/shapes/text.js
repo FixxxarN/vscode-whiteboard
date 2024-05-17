@@ -1,6 +1,8 @@
 import { SHAPE_TYPES } from "../../components/StateContextProvider/constants";
 import { calculateBoundingBox } from "../utils";
 
+const invalidKeys = ['shift', 'meta', 'control', 'capslock', 'alt', 'tab', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12', 'arrowup', 'arrowright', 'arrowdown', 'arrowleft'];
+
 class Text {
   constructor(point, font, fillStyle) {
     this.id = crypto.randomUUID();
@@ -26,6 +28,10 @@ class Text {
   }
 
   onKeyDown(event, canvas, context, currentShape, addShape, clearCanvas) {
+    if (invalidKeys.includes(event.key.toLowerCase())) {
+      return;
+    }
+
     if (event.key === "Escape") {
       canvas.tabIndex = 0;
 
@@ -37,7 +43,7 @@ class Text {
 
     clearCanvas();
 
-    this.indicate = false;
+    this.indicate = true;
 
     context.font = this.font;
     context.fillStyle = this.fillStyle;

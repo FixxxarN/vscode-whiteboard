@@ -14,7 +14,7 @@ export const action = (type, data) => ({ type, data });
 export const initialState = {
   mode: MODES.INTERACT,
   currentShapeType: undefined,
-  textSize: 6,
+  textSize: 16,
   textColor: 'black',
   strokeWidth: 1,
   strokeColor: 'black',
