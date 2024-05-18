@@ -43,11 +43,13 @@ export const getInteraceEventHandlers = ({ canvas, context, shapes, hoveredShape
   }
 
   const onMouseUp = (event) => {
-    hoveredShape.current.updateBoundingBox(context);
-    addShape(hoveredShape.current);
-    clearCanvas();
-    hoveredShape.current = undefined;
-    mouseDown.current = false;
+    if (hoveredShape.current) {
+      hoveredShape.current.updateBoundingBox(context);
+      addShape(hoveredShape.current);
+      clearCanvas();
+      hoveredShape.current = undefined;
+      mouseDown.current = false;
+    }
   }
 
   return { onMouseDown, onMouseMove, onMouseUp }
