@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Canvas } from "./styles.js";
 import useEventListeners from "../../../hooks/useEventListeners/index.js";
 import useResizeAndScale from "../useResizeAndScale.js";
@@ -6,6 +6,7 @@ import useResizeAndScale from "../useResizeAndScale.js";
 const DynamicCanvas = () => {
   const [canvas, setCanvas] = useState(undefined);
   const [context, setContext] = useState(undefined);
+  const animationFrameId = useRef(undefined);
 
   useResizeAndScale(canvas, context);
 
@@ -27,7 +28,14 @@ const DynamicCanvas = () => {
       }}
       onMouseMove={(event) => {
         if (!eventListeners?.onMouseMove) return;
-        eventListeners.onMouseMove(event);
+
+        if (animationFrameId.current) {
+          cancelAnimationFrame(animationFrameId.current);
+        }
+
+        animationFrameId.current = requestAnimationFrame(() => {
+          eventListeners.onMouseMove(event);
+        });
       }}
       onMouseUp={(event) => {
         if (!eventListeners?.onMouseUp) return;
