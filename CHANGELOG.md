@@ -1,5 +1,12 @@
 # Change Log
 
+## [3.1.0] - 2024-05-18
+
+### Added
+
+- New shape Picture
+- Possibility to paste images inside of canvas and render them
+
 ## [3.0.0] - 2024-05-15
 
 ### Added
