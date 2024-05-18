@@ -9,5 +9,6 @@ export const SHAPE_TYPES = {
   RECTANGLE: "RECTANGLE",
   CIRCLE: "CIRCLE",
   ARROW: "ARROW",
-  TEXT: 'TEXT'
+  TEXT: 'TEXT',
+  PICTURE: 'PICTURE'
 };

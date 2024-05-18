@@ -4,6 +4,7 @@ import useResizeAndScale from "../useResizeAndScale.js";
 import useDrawShapes from "../../../hooks/useDrawShapes/index.js";
 import useStaticCanvasEventHandlers from "../../../hooks/useStaticCanvasEventHandlers.js/index.js";
 import useUndoRedo from "../../../hooks/useUndoRedo/index.js";
+import usePastePicture from "../../../hooks/usePastePicture/index.js";
 
 const StaticCanvas = () => {
   const [canvas, setCanvas] = useState(undefined);
@@ -13,6 +14,7 @@ const StaticCanvas = () => {
   useStaticCanvasEventHandlers(canvas, context);
   useDrawShapes(canvas, context);
   useUndoRedo();
+  usePastePicture();
 
   const refCallback = useCallback((canvas) => {
     setCanvas(canvas);
