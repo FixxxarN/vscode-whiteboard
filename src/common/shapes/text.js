@@ -1,10 +1,12 @@
 import { SHAPE_TYPES } from "../../components/StateContextProvider/constants";
 import { calculateBoundingBox } from "../utils";
+import Shape from "./shape";
 
 const invalidKeys = ['shift', 'meta', 'control', 'capslock', 'alt', 'tab', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12', 'arrowup', 'arrowright', 'arrowdown', 'arrowleft'];
 
-class Text {
+class Text extends Shape {
   constructor(point, font, fillStyle) {
+    super();
     this.id = crypto.randomUUID();
     this.point = point;
     this.points = [];
@@ -65,7 +67,9 @@ class Text {
     const arrayOfXCoordinates = changedPoints.map((point) => point.x);
     const arrayOfYCoordinates = changedPoints.map((point) => point.y);
     this.point = { x: Math.min(...arrayOfXCoordinates), y: Math.min(...arrayOfYCoordinates) + Number(this.font.split("px")[0]) };
+    this.updateBoundingBox(context);
     this.draw(context)
+    this.drawBorder(context);
   }
 
   indicateTyping(context, clearCanvas) {

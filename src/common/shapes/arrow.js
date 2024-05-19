@@ -1,8 +1,10 @@
 import { SHAPE_TYPES } from "../../components/StateContextProvider/constants";
 import { calculateBoundingBox } from "../utils";
+import Shape from "./shape";
 
-class Arrow {
+class Arrow extends Shape {
   constructor(points, strokeWidth, strokeColor) {
+    super();
     this.id = crypto.randomUUID();
     this.points = points;
     this.strokeWidth = strokeWidth;
@@ -65,7 +67,9 @@ class Arrow {
   move(changedPoints, context, clearCanvas) {
     clearCanvas();
     this.points = changedPoints;
+    this.updateBoundingBox();
     this.draw(context)
+    this.drawBorder(context);
   }
 
   onMouseUp(event, canvas, context, currentShape, addShape, clearCanvas) {

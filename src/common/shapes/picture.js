@@ -1,8 +1,10 @@
 import { SHAPE_TYPES } from "../../components/StateContextProvider/constants";
 import { calculateBoundingBox } from "../utils";
+import Shape from "./shape";
 
-class Picture {
+class Picture extends Shape {
   constructor(point, bitmap) {
+    super();
     this.id = crypto.randomUUID();
     this.point = point;
     this.bitmap = bitmap
@@ -23,7 +25,9 @@ class Picture {
     const arrayOfXCoordinates = changedPoints.map((point) => point.x);
     const arrayOfYCoordinates = changedPoints.map((point) => point.y);
     this.point = { x: Math.min(...arrayOfXCoordinates), y: Math.min(...arrayOfYCoordinates) };
+    this.updateBoundingBox();
     this.draw(context)
+    this.drawBorder(context);
   }
 
   onMouseUp(event, canvas, context, currentShape, addShape, clearCanvas) {
