@@ -15,7 +15,8 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import TextFieldsIcon from "@mui/icons-material/TextFields";
 
 const Hotbar = () => {
-  const { setMode, setCurrentShapeType } = useContext(StateContext);
+  const { state, setMode, setCurrentShapeType } = useContext(StateContext);
+  const { mode, currentShapeType } = state;
 
   const onExportClick = useCallback(() => {
     PubSub.publish(EXPORT_CANVAS);
@@ -59,12 +60,42 @@ const Hotbar = () => {
     <Container>
       <ModeButton icon={<DownloadIcon />} onClick={onExportClick} />
       <ModeButton icon={<ClearIcon />} onClick={onClearClick} />
-      <ModeButton icon={<NavigationIcon />} onClick={onInteractClick} />
-      <ModeButton icon={<BrushIcon />} onClick={onPencilClick} />
-      <ModeButton icon={<Crop54Icon />} onClick={onRectangleClick} />
-      <ModeButton icon={<CircleOutlinedIcon />} onClick={onCircleClick} />
-      <ModeButton icon={<ArrowRightAltIcon />} onClick={onArrowClick} />
-      <ModeButton icon={<TextFieldsIcon />} onClick={onTextClick} />
+      <ModeButton
+        selected={mode === MODES.INTERACT}
+        icon={<NavigationIcon />}
+        onClick={onInteractClick}
+      />
+      <ModeButton
+        selected={
+          mode === MODES.DRAW && currentShapeType === SHAPE_TYPES.PENCIL
+        }
+        icon={<BrushIcon />}
+        onClick={onPencilClick}
+      />
+      <ModeButton
+        selected={
+          mode === MODES.DRAW && currentShapeType === SHAPE_TYPES.RECTANGLE
+        }
+        icon={<Crop54Icon />}
+        onClick={onRectangleClick}
+      />
+      <ModeButton
+        selected={
+          mode === MODES.DRAW && currentShapeType === SHAPE_TYPES.CIRCLE
+        }
+        icon={<CircleOutlinedIcon />}
+        onClick={onCircleClick}
+      />
+      <ModeButton
+        selected={mode === MODES.DRAW && currentShapeType === SHAPE_TYPES.ARROW}
+        icon={<ArrowRightAltIcon />}
+        onClick={onArrowClick}
+      />
+      <ModeButton
+        selected={mode === MODES.DRAW && currentShapeType === SHAPE_TYPES.TEXT}
+        icon={<TextFieldsIcon />}
+        onClick={onTextClick}
+      />
     </Container>
   );
 };

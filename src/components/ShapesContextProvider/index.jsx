@@ -1,5 +1,13 @@
-import { createContext, useCallback, useMemo, useReducer } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useReducer,
+} from "react";
 import reducer, { action, actions, initialState } from "./reducer";
+import { StateContext } from "../StateContextProvider";
+import { MODES } from "../StateContextProvider/constants";
 
 export const ShapesContext = createContext({});
 
@@ -14,6 +22,7 @@ const {
 } = actions;
 
 const ShapesContextProvider = ({ children }) => {
+  const { setMode } = useContext(StateContext);
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const dispatchAction = useCallback(
@@ -21,8 +30,11 @@ const ShapesContextProvider = ({ children }) => {
     [dispatch]
   );
   const addShape = useCallback(
-    (shape) => dispatchAction(ADD_SHAPE, shape),
-    [dispatchAction]
+    (shape) => {
+      dispatchAction(ADD_SHAPE, shape);
+      setMode(MODES.INTERACT);
+    },
+    [dispatchAction, setMode]
   );
   const popShape = useCallback(
     () => dispatchAction(POP_SHAPE),
