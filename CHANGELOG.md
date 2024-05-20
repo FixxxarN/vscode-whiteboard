@@ -1,5 +1,12 @@
 # Change Log
 
+## [3.2.0] - 2024-05-20
+
+### Added
+
+- Show what mode and shape type that is selected
+- Show border around shapes when moving them
+
 ## [3.1.0] - 2024-05-18
 
 ### Added
