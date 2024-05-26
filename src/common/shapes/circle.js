@@ -58,7 +58,7 @@ class Circle extends Shape {
 
   onMouseUp(event, canvas, context, currentShape, addShape, clearCanvas) {
     this.points.push({ x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop });
-    this.boundingBox = calculateBoundingBox(this.points);
+    this.updateBoundingBox();
 
     addShape(currentShape.current);
     clearCanvas();
@@ -66,7 +66,15 @@ class Circle extends Shape {
   }
 
   updateBoundingBox() {
-    this.boundingBox = calculateBoundingBox(this.points);
+    const startingPoint = this.points[0];
+    const endingPoint = this.points[1];
+
+    const centerPoint = { x: startingPoint.x + ((endingPoint.x - startingPoint.x) / 2), y: startingPoint.y + ((endingPoint.y - startingPoint.y) / 2) }
+    const radius = Math.abs((endingPoint.x - startingPoint.x) / 2);
+
+    const boundingBoxPoints = [{ x: centerPoint.x - radius, y: centerPoint.y - radius }, { x: centerPoint.x + radius, y: centerPoint.y + radius }];
+
+    this.boundingBox = calculateBoundingBox(boundingBoxPoints);
   }
 }
 
