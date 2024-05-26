@@ -27,7 +27,7 @@ class Picture extends Shape {
     this.point = { x: Math.min(...arrayOfXCoordinates), y: Math.min(...arrayOfYCoordinates) };
     this.updateBoundingBox();
     this.draw(context)
-    this.drawBorder(context);
+    this.drawBorder(context, 1);
   }
 
   onMouseUp(event, canvas, context, currentShape, addShape, clearCanvas) {

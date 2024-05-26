@@ -53,7 +53,7 @@ class Rectangle extends Shape {
     this.points = changedPoints;
     this.updateBoundingBox();
     this.draw(context)
-    this.drawBorder(context)
+    this.drawBorder(context, this.strokeWidth);
   }
 
   onMouseUp(event, canvas, context, currentShape, addShape, clearCanvas) {

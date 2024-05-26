@@ -69,7 +69,7 @@ class Text extends Shape {
     this.point = { x: Math.min(...arrayOfXCoordinates), y: Math.min(...arrayOfYCoordinates) + Number(this.font.split("px")[0]) };
     this.updateBoundingBox(context);
     this.draw(context)
-    this.drawBorder(context);
+    this.drawBorder(context, 1);
   }
 
   indicateTyping(context, clearCanvas) {
