@@ -2,7 +2,7 @@ import { SHAPE_TYPES } from "../../components/StateContextProvider/constants";
 import { calculateBoundingBox } from "../utils";
 import Shape from "./shape";
 
-const invalidKeys = ['shift', 'meta', 'control', 'capslock', 'alt', 'tab', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12', 'arrowup', 'arrowright', 'arrowdown', 'arrowleft'];
+const invalidKeys = ['shift', 'meta', 'control', 'capslock', 'alt', 'enter', 'tab', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12', 'arrowup', 'arrowright', 'arrowdown', 'arrowleft'];
 
 class Text extends Shape {
   constructor(point, font, fillStyle) {
