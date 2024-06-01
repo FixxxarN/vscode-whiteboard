@@ -1,14 +1,20 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useContext, useRef, useState } from "react";
 import { Canvas } from "./styles.js";
 import useEventListeners from "../../../hooks/useEventListeners/index.js";
 import useResizeAndScale from "../useResizeAndScale.js";
+import { StateContext } from "../../StateContextProvider/index.jsx";
+import useZoom from "../../../hooks/useZoom/index.js";
 
 const DynamicCanvas = () => {
   const [canvas, setCanvas] = useState(undefined);
   const [context, setContext] = useState(undefined);
   const animationFrameId = useRef(undefined);
 
-  useResizeAndScale(canvas, context);
+  const { state } = useContext(StateContext);
+  const { scale, origin } = state;
+
+  useResizeAndScale(canvas, context, scale, origin);
+  useZoom(canvas);
 
   const refCallback = useCallback((canvas) => {
     if (canvas) {
@@ -16,6 +22,20 @@ const DynamicCanvas = () => {
       setContext(canvas.getContext("2d"));
     }
   }, []);
+
+  const setCanvasScale = () => {
+    context.save();
+
+    const devicePixelRatio = window.devicePixelRatio;
+
+    canvas.height = Math.floor(window.innerHeight * devicePixelRatio);
+    canvas.width = Math.floor(window.innerWidth * devicePixelRatio);
+
+    context.translate(origin.x, origin.y);
+    context.scale(scale, scale);
+
+    context.restore();
+  };
 
   const eventListeners = useEventListeners(canvas, context);
 
@@ -25,6 +45,7 @@ const DynamicCanvas = () => {
       onMouseDown={(event) => {
         if (!eventListeners?.onMouseDown) return;
         eventListeners.onMouseDown(event);
+        setCanvasScale();
       }}
       onMouseMove={(event) => {
         if (!eventListeners?.onMouseMove) return;

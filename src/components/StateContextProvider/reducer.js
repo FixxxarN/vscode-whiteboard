@@ -7,6 +7,8 @@ export const actions = {
   SET_TEXT_COLOR: 'SET_TEXT_COLOR',
   SET_STROKE_WIDTH: 'SET_STROKE_WIDTH',
   SET_STROKE_COLOR: 'SET_STROKE_COLOR',
+  SET_SCALE: 'SET_SCALE',
+  SET_ORIGIN: 'SET_ORIGIN'
 }
 
 export const action = (type, data) => ({ type, data });
@@ -18,6 +20,8 @@ export const initialState = {
   textColor: 'black',
   strokeWidth: 1,
   strokeColor: 'black',
+  scale: 1,
+  origin: { x: 0, y: 0 }
 }
 
 const reducer = (state, action) => {
@@ -51,6 +55,16 @@ const reducer = (state, action) => {
       const strokeColor = action.data;
 
       return { ...state, strokeColor }
+    }
+    case actions.SET_SCALE: {
+      const scale = action.data;
+
+      return { ...state, scale }
+    }
+    case actions.SET_ORIGIN: {
+      const origin = action.data;
+
+      return { ...state, origin: { ...origin } }
     }
   }
 }

@@ -29,7 +29,7 @@ class Text extends Shape {
     context.fillText(this.text, this.point.x, this.point.y);
   }
 
-  onKeyDown(event, canvas, context, currentShape, addShape, clearCanvas) {
+  onKeyDown({ event, canvas, context, currentShape, addShape, clearCanvas }) {
     if (invalidKeys.includes(event.key.toLowerCase())) {
       return;
     }

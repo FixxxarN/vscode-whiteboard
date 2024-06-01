@@ -1,14 +1,17 @@
-export const getInteraceEventHandlers = ({ canvas, context, shapes, hoveredShape, mouseDownPosition, hoveredShapePoints, mouseDown, removeShapeById, addShape, clearCanvas }) => {
+import { calculateMouseCoordinateWithScale } from "../../../common/utils";
+
+export const getInteraceEventHandlers = ({ canvas, context, shapes, hoveredShape, mouseDownPosition, hoveredShapePoints, mouseDown, removeShapeById, addShape, clearCanvas, scale, origin }) => {
   const onMouseDown = (event) => {
     if (hoveredShape.current) {
       mouseDown.current = true;
       hoveredShapePoints.current = hoveredShape.current.points;
-      mouseDownPosition.current = { x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop };
+
+      mouseDownPosition.current = calculateMouseCoordinateWithScale(event, canvas, scale, origin);
     }
   }
 
   const onMouseMove = (event) => {
-    const mousePosition = { x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop };
+    const mousePosition = calculateMouseCoordinateWithScale(event, canvas, scale, origin);
 
     if (mouseDown.current) {
       if (hoveredShape.current?.id) {

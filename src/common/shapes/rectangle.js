@@ -1,5 +1,5 @@
 import { SHAPE_TYPES } from "../../components/StateContextProvider/constants";
-import { calculateBoundingBox } from "../utils";
+import { calculateBoundingBox, calculateMouseCoordinateWithScale } from "../utils";
 import Shape from "./shape";
 
 class Rectangle extends Shape {
@@ -31,7 +31,7 @@ class Rectangle extends Shape {
     context.stroke();
   }
 
-  onMouseMove(event, canvas, context, clearCanvas) {
+  onMouseMove({ event, canvas, context, clearCanvas, scale, origin }) {
     clearCanvas();
 
     context.strokeStyle = this.strokeColor;
@@ -42,7 +42,7 @@ class Rectangle extends Shape {
     const startingX = this.points[0].x;
     const startingY = this.points[0].y;
 
-    const newPoint = { x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop }
+    const newPoint = calculateMouseCoordinateWithScale(event, canvas, scale, origin);
 
     context.rect(startingX, startingY, newPoint.x - startingX, newPoint.y - startingY);
     context.stroke();
@@ -56,8 +56,8 @@ class Rectangle extends Shape {
     this.drawBorder(context, this.strokeWidth);
   }
 
-  onMouseUp(event, canvas, context, currentShape, addShape, clearCanvas) {
-    this.points.push({ x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop });
+  onMouseUp({ event, canvas, currentShape, addShape, clearCanvas, scale, origin }) {
+    this.points.push(calculateMouseCoordinateWithScale(event, canvas, scale, origin));
     this.boundingBox = calculateBoundingBox(this.points);
 
     addShape(currentShape.current);

@@ -3,13 +3,16 @@ import Circle from "../../../common/shapes/circle";
 import Pencil from "../../../common/shapes/pencil";
 import Rectangle from "../../../common/shapes/rectangle";
 import Text from "../../../common/shapes/text";
+import { calculateMouseCoordinateWithScale } from "../../../common/utils";
 import { SHAPE_TYPES } from "../../../components/StateContextProvider/constants";
 
 export const getDrawEventHandlers = ({ canvas, context, currentShape, state, addShape, clearCanvas }) => {
-  const { strokeWidth, strokeColor, textSize, textColor } = state;
+  const { strokeWidth, strokeColor, textSize, textColor, scale, origin } = state;
 
   const onMouseDown = (event) => {
-    const initialPoint = { x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop };
+    const { x, y } = calculateMouseCoordinateWithScale(event, canvas, scale, origin);
+
+    const initialPoint = { x, y };
 
     switch (state.currentShapeType) {
       case SHAPE_TYPES.PENCIL: {
@@ -50,19 +53,19 @@ export const getDrawEventHandlers = ({ canvas, context, currentShape, state, add
     if (!currentShape.current) return;
 
     if (currentShape.current?.onMouseMove) {
-      currentShape.current.onMouseMove(event, canvas, context, clearCanvas)
+      currentShape.current.onMouseMove({ event, canvas, context, clearCanvas, scale, origin })
     }
   }
 
   const onMouseUp = (event) => {
     if (currentShape.current?.onMouseUp) {
-      currentShape.current.onMouseUp(event, canvas, context, currentShape, addShape, clearCanvas)
+      currentShape.current.onMouseUp({ event, canvas, context, currentShape, addShape, clearCanvas, scale, origin })
     }
   }
 
   const onKeyDown = (event) => {
     if (currentShape.current?.onKeyDown) {
-      currentShape.current.onKeyDown(event, canvas, context, currentShape, addShape, clearCanvas)
+      currentShape.current.onKeyDown({ event, canvas, context, currentShape, addShape, clearCanvas })
     }
   }
 

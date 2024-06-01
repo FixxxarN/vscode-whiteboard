@@ -30,7 +30,7 @@ class Picture extends Shape {
     this.drawBorder(context, 1);
   }
 
-  onMouseUp(event, canvas, context, currentShape, addShape, clearCanvas) {
+  onMouseUp({ currentShape, addShape, clearCanvas }) {
     addShape(currentShape.current);
     clearCanvas();
     currentShape.current = undefined;

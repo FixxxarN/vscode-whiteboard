@@ -7,3 +7,15 @@ export const calculateBoundingBox = (points) => {
 
   return { bottomLeft, topRight }
 }
+
+export const calculateMouseCoordinateWithScale = (event, canvas, scale, origin) => {
+  const rect = canvas.getBoundingClientRect();
+
+  const mouseX = (event.clientX - rect.left) * 2;
+  const mouseY = (event.clientY - rect.top) * 2;
+
+  const worldX = (mouseX - origin.x) / scale;
+  const worldY = (mouseY - origin.y) / scale;
+
+  return { x: worldX, y: worldY }
+}

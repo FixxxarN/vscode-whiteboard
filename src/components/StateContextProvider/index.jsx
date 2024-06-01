@@ -10,6 +10,8 @@ const {
   SET_TEXT_COLOR,
   SET_STROKE_WIDTH,
   SET_STROKE_COLOR,
+  SET_SCALE,
+  SET_ORIGIN,
 } = actions;
 
 const StateContextProvider = ({ children }) => {
@@ -43,6 +45,14 @@ const StateContextProvider = ({ children }) => {
     (strokeColor) => dispatchAction(SET_STROKE_COLOR, strokeColor),
     [dispatchAction]
   );
+  const setScale = useCallback(
+    (scale) => dispatchAction(SET_SCALE, scale),
+    [dispatchAction]
+  );
+  const setOrigin = useCallback(
+    (origin) => dispatchAction(SET_ORIGIN, origin),
+    [dispatchAction]
+  );
 
   const value = useMemo(
     () => ({
@@ -53,6 +63,8 @@ const StateContextProvider = ({ children }) => {
       setTextColor,
       setStrokeWidth,
       setStrokeColor,
+      setScale,
+      setOrigin,
     }),
     [state, dispatch]
   );

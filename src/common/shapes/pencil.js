@@ -1,5 +1,5 @@
 import { SHAPE_TYPES } from "../../components/StateContextProvider/constants";
-import { calculateBoundingBox } from "../utils";
+import { calculateBoundingBox, calculateMouseCoordinateWithScale } from "../utils";
 import Shape from "./shape";
 
 class Pencil extends Shape {
@@ -34,7 +34,7 @@ class Pencil extends Shape {
     }
   }
 
-  onMouseMove(event, canvas, context) {
+  onMouseMove({ event, canvas, context, scale, origin }) {
     const pointsOnlyIncludeInitialValue = this.points.length === 1;
 
     if (pointsOnlyIncludeInitialValue) {
@@ -47,16 +47,14 @@ class Pencil extends Shape {
 
       context.moveTo(this.points[0].x, this.points[0].y);
 
-      this.points.push({ x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop });
-
+      this.points.push(calculateMouseCoordinateWithScale(event, canvas, scale, origin));
       return;
     }
 
     const startingX = this.points[this.points.length - 1].x;
     const startingY = this.points[this.points.length - 1].y;
 
-    const endingX = event.clientX - canvas.offsetLeft;
-    const endingY = event.clientY - canvas.offsetTop;
+    const { x: endingX, y: endingY } = calculateMouseCoordinateWithScale(event, canvas, scale, origin);
 
     if (startingX === endingX && startingY === endingY) {
       return;
@@ -76,8 +74,8 @@ class Pencil extends Shape {
     this.drawBorder(context, this.strokeWidth);
   }
 
-  onMouseUp(event, canvas, context, currentShape, addShape, clearCanvas) {
-    this.points.push({ x: event.clientX - canvas.offsetLeft, y: event.clientY - canvas.offsetTop });
+  onMouseUp({ event, canvas, currentShape, addShape, clearCanvas, scale, origin }) {
+    this.points.push(calculateMouseCoordinateWithScale(event, canvas, scale, origin));
     this.boundingBox = calculateBoundingBox(this.points);
 
     addShape(currentShape.current);
