@@ -16,7 +16,7 @@ class Picture extends Shape {
 
   draw(context) {
     context.moveTo(this.point.x, this.point.y);
-    context.drawImage(this.bitmap, this.point.x, this.point.y, this.bitmap.width / 2, this.bitmap.height / 2)
+    context.drawImage(this.bitmap, this.point.x, this.point.y, this.bitmap.width / window.devicePixelRatio, this.bitmap.height / window.devicePixelRatio)
     this.updateBoundingBox()
   }
 

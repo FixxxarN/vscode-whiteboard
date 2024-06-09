@@ -11,8 +11,8 @@ export const calculateBoundingBox = (points) => {
 export const calculateMouseCoordinateWithScale = (event, canvas, scale, origin) => {
   const rect = canvas.getBoundingClientRect();
 
-  const mouseX = (event.clientX - rect.left) * 2;
-  const mouseY = (event.clientY - rect.top) * 2;
+  const mouseX = (event.clientX - rect.left) * window.devicePixelRatio;
+  const mouseY = (event.clientY - rect.top) * window.devicePixelRatio;
 
   const worldX = (mouseX - origin.x) / scale;
   const worldY = (mouseY - origin.y) / scale;
