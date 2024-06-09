@@ -12,6 +12,7 @@ const {
   SET_STROKE_COLOR,
   SET_SCALE,
   SET_ORIGIN,
+  SET_BOUNDING_BOX,
 } = actions;
 
 const StateContextProvider = ({ children }) => {
@@ -53,6 +54,10 @@ const StateContextProvider = ({ children }) => {
     (origin) => dispatchAction(SET_ORIGIN, origin),
     [dispatchAction]
   );
+  const setBoundingBox = useCallback(
+    (boundingBox) => dispatchAction(SET_BOUNDING_BOX, boundingBox),
+    [dispatchAction]
+  );
 
   const value = useMemo(
     () => ({
@@ -65,6 +70,7 @@ const StateContextProvider = ({ children }) => {
       setStrokeColor,
       setScale,
       setOrigin,
+      setBoundingBox,
     }),
     [state, dispatch]
   );

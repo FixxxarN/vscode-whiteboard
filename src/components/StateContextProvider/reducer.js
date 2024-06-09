@@ -8,7 +8,8 @@ export const actions = {
   SET_STROKE_WIDTH: 'SET_STROKE_WIDTH',
   SET_STROKE_COLOR: 'SET_STROKE_COLOR',
   SET_SCALE: 'SET_SCALE',
-  SET_ORIGIN: 'SET_ORIGIN'
+  SET_ORIGIN: 'SET_ORIGIN',
+  SET_BOUNDING_BOX: 'SET_BOUNDING_BOX'
 }
 
 export const action = (type, data) => ({ type, data });
@@ -21,7 +22,8 @@ export const initialState = {
   strokeWidth: 1,
   strokeColor: 'black',
   scale: 1,
-  origin: { x: 0, y: 0 }
+  origin: { x: 0, y: 0 },
+  boundingBox: undefined,
 }
 
 const reducer = (state, action) => {
@@ -65,6 +67,11 @@ const reducer = (state, action) => {
       const origin = action.data;
 
       return { ...state, origin: { ...origin } }
+    }
+    case actions.SET_BOUNDING_BOX: {
+      const boundingBox = action.data;
+
+      return { ...state, boundingBox: { ...boundingBox } }
     }
   }
 }

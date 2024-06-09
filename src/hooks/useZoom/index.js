@@ -2,7 +2,7 @@ const { useEffect, useCallback, useContext } = require("react");
 const { StateContext } = require("../../components/StateContextProvider");
 
 const useZoom = (canvas) => {
-  const { state, setScale, setOrigin } = useContext(StateContext);
+  const { state, setScale, setOrigin, setBoundingBox } = useContext(StateContext);
   const { scale, origin } = state;
 
   const zoom = useCallback(
@@ -25,11 +25,22 @@ const useZoom = (canvas) => {
           y: mouseY - worldY * newScale,
         };
 
+        const bottomLeft = {
+          x: -newTranslatePos.x / newScale,
+          y: (canvas.height - newTranslatePos.y) / newScale,
+        };
+
+        const topRight = {
+          x: (canvas.width - newTranslatePos.x) / newScale,
+          y: -newTranslatePos.y / newScale,
+        };
+
         setScale(newScale);
         setOrigin(newTranslatePos);
+        setBoundingBox({ bottomLeft, topRight });
       }
     },
-    [scale, origin, setScale, setOrigin, canvas]
+    [scale, origin, setScale, setOrigin, setBoundingBox, canvas]
   );
 
   useEffect(() => {
