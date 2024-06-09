@@ -1,5 +1,17 @@
 # Change Log
 
+## [3.3.0] - 2024-06-09
+
+### Added
+
+- Zoom functionality
+
+### Fixed
+
+- Take stroke width into account when calculating border around moving shapes
+- Text not being removed when typing and changing mode or shape
+- Border around moving circles are now correct around the entire circle
+
 ## [3.2.0] - 2024-05-20
 
 ### Added
