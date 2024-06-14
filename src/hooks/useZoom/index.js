@@ -1,3 +1,4 @@
+import { throttle } from "../../common/utils";
 const { useEffect, useCallback, useContext } = require("react");
 const { StateContext } = require("../../components/StateContextProvider");
 
@@ -43,17 +44,19 @@ const useZoom = (canvas) => {
     [scale, origin, setScale, setOrigin, setBoundingBox, canvas]
   );
 
+  const throttledZoom = useCallback((event) => throttle(zoom(event), 50), [zoom]);
+
   useEffect(() => {
     if (canvas) {
-      canvas.addEventListener("wheel", zoom);
+      canvas.addEventListener("wheel", throttledZoom);
     }
 
     return () => {
       if (canvas) {
-        canvas.removeEventListener("wheel", zoom);
+        canvas.removeEventListener("wheel", throttledZoom);
       }
     };
-  }, [canvas, zoom]);
+  }, [canvas, throttledZoom]);
 };
 
 export default useZoom;

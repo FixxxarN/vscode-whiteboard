@@ -19,3 +19,13 @@ export const calculateMouseCoordinateWithScale = (event, canvas, scale, origin) 
 
   return { x: worldX, y: worldY }
 }
+
+export const throttle = (func, delay) => {
+  let time = Date.now();
+  return (...args) => {
+    if ((time + delay - Date.now()) <= 0) {
+      func.apply(this, args);
+      time = Date.now();
+    }
+  }
+}

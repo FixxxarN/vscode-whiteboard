@@ -37,7 +37,7 @@ class Picture extends Shape {
   }
 
   updateBoundingBox() {
-    this.points = [{ x: this.point.x, y: this.point.y + this.bitmap.height / 2 }, { x: this.point.x + this.bitmap.width / 2, y: this.point.y }]
+    this.points = [{ x: this.point.x, y: this.point.y + this.bitmap.height / window.devicePixelRatio }, { x: this.point.x + this.bitmap.width / window.devicePixelRatio, y: this.point.y }]
     this.boundingBox = calculateBoundingBox(this.points);
   }
 }
